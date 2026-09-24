@@ -313,19 +313,19 @@
     requestAnimationFrame(draw);
   }
 
-  /* ---------- Contact form → opens email client with details ---------- */
-  const form = $('#contactForm');
-  form?.addEventListener('submit', e => {
+  /* ---------- Forms (contact, careers) → open email client with details ---------- */
+  $$('form[data-mailto]').forEach(form => form.addEventListener('submit', e => {
     e.preventDefault();
     let ok = true;
     $$('[required]', form).forEach(f => { const bad = !f.value.trim() || (f.type === 'email' && !/^\S+@\S+\.\S+$/.test(f.value)); f.classList.toggle('invalid', bad); if (bad) ok = false; });
     if (!ok) { toast('Please fill in the highlighted fields.', false); return; }
     const d = Object.fromEntries(new FormData(form));
     const body = Object.entries(d).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join('\n');
-    location.href = `mailto:hello@rixlsoft.com?subject=${encodeURIComponent('Project enquiry — ' + (d.Company || d.Name || ''))}&body=${encodeURIComponent(body)}`;
+    const subject = `${form.dataset.subject || 'Enquiry'} — ${d.Company || d.Name || ''}`;
+    location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     toast('Thanks! Your email app is opening — we reply within 24 hours.', true);
     form.reset();
-  });
+  }));
   function toast(msg, good) {
     let t = $('.toast');
     if (!t) { t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }

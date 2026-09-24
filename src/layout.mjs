@@ -1,7 +1,9 @@
 import fs from 'node:fs';
 import crypto from 'node:crypto';
-import { esc, icon, brand, logoName, html } from './lib.mjs';
-import { CATEGORIES, SERVICES, INDUSTRIES, PHOTOS, TECH_STACK, img } from './data/site.mjs';
+import { esc, icon, brand, html } from './lib.mjs';
+import { CATEGORIES, SERVICES, INDUSTRIES, PHOTOS, ARTICLE_PHOTOS, img } from './data/site.mjs';
+import CASE_STUDIES from './data/case-studies.mjs';
+import BLOG from './data/blog.mjs';
 
 // Cache-busting: the asset URL changes whenever the file's content changes,
 // so browsers/GitHub Pages never pair new HTML with a stale stylesheet or script.
@@ -61,38 +63,56 @@ function megaIndustries(home) {
     </div>`;
 }
 
-function megaTech(root, home) {
+const featureCard = (href, photo, tag, title, more) => html`
+        <a class="ms-feature mg-feature" href="${href}">
+          <img src="${img(photo, 600)}" alt="" loading="lazy">
+          <span class="tag">${tag}</span>
+          <h5>${title}</h5>
+          <span class="more">${more} ${icon('arrow-right')}</span>
+        </a>`;
+
+function megaInsights(root) {
+  const cs = CASE_STUDIES[0];
   return html`
     <div class="mega-drop">
-      <div class="mg-body">
-        <div class="mg-head"><h4>Technologies We Master</h4><a href="${home}#technology">See full stack ${icon('arrow-right')}</a></div>
-        <div class="tech-groups">
-          ${TECH_STACK.map(t => html`
-          <div class="tech-group"><h6>${esc(t.group)}</h6><div class="tech-chips">${t.items.slice(0, 6).map(k => html`<a class="tech-chip" href="${home}#technology"><img src="${root}assets/logos/${k}.svg" alt="" width="16" height="16" loading="lazy">${esc(logoName(k))}</a>`)}</div></div>`)}
+      <div class="mg">
+        <div class="mg-body mg-2">
+          <div>
+            <div class="mg-head"><h4>${icon('folder-open')} Case Studies</h4><a href="${root}case-studies/index.html">View all ${icon('arrow-right')}</a></div>
+            ${CASE_STUDIES.map(c => html`<a class="drop-link" href="${root}case-studies/${c.slug}.html"><span class="d-icon">${icon(INDUSTRIES[c.industry].icon)}</span><span class="d-text">${esc(c.title)}<small>${esc(INDUSTRIES[c.industry].name)}</small></span></a>`)}
+          </div>
+          <div>
+            <div class="mg-head"><h4>${icon('newspaper')} Blog</h4><a href="${root}blog/index.html">View all ${icon('arrow-right')}</a></div>
+            ${BLOG.map(b => html`<a class="drop-link" href="${root}blog/${b.slug}.html"><span class="d-icon">${icon('book-open')}</span><span class="d-text">${esc(b.title)}<small>${esc(b.category)} · ${b.readMins} min read</small></span></a>`)}
+          </div>
         </div>
+        ${featureCard(`${root}case-studies/${cs.slug}.html`, ARTICLE_PHOTOS[cs.slug], 'Featured case study', esc(cs.title), 'Read the story')}
       </div>
     </div>`;
 }
 
-const smallDrop = links => html`
-          <div class="small-drop">${links.map(([href, ic, t, s]) => html`
-            <a class="drop-link" href="${href}"><span class="d-icon">${icon(ic)}</span><span class="d-text">${t}<small>${s}</small></span></a>`)}
-          </div>`;
-
-function nav(root, home) {
-  const insights = [
-    [`${home}#insights`, 'folder-open', 'Case Studies', 'Real project outcomes'],
-    [`${home}#insights`, 'newspaper', 'Blog &amp; Articles', 'Tech insights &amp; guides'],
-    [`${home}#process`, 'workflow', 'How We Deliver', 'Our 5-phase process'],
-  ];
-  const company = [
-    [`${home}#about`, 'building-2', 'About RixlSoft', 'Our story &amp; mission'],
-    [`${home}#about`, 'gem', 'Why RixlSoft', 'What makes us different'],
-    [`${home}#recognition`, 'award', 'Awards &amp; Certifications', 'Partnerships &amp; standards'],
-    [`${home}#contact`, 'briefcase', 'Careers', 'Join our team'],
+function megaCompany(root, home) {
+  const links = [
+    [`${root}about.html`, 'building-2', 'About RixlSoft', 'Our story, mission &amp; values'],
+    [`${root}about.html#why`, 'gem', 'Why RixlSoft', 'Platforms &amp; recognition'],
+    [`${root}about.html#how`, 'workflow', 'How We Work', 'Delivery model &amp; process'],
+    [`${root}careers.html`, 'briefcase', 'Careers', 'Join our team'],
     [`${home}#contact`, 'mail', 'Contact Us', 'Start a conversation'],
   ];
-  const mobLinks = (list) => list.map(([href, ic, t]) => html`<a class="mob-sub-link" href="${href}">${icon(ic)} ${t}</a>`);
+  return html`
+    <div class="mega-drop mega-sm">
+      <div class="mg">
+        <div class="mg-body">
+          <div class="mg-head"><h4>Company</h4></div>
+          <div class="mg-grid c2">${links.map(([h, ic, t, s]) => html`<a class="drop-link" href="${h}"><span class="d-icon">${icon(ic)}</span><span class="d-text">${t}<small>${s}</small></span></a>`)}</div>
+        </div>
+        ${featureCard(`${root}careers.html`, PHOTOS.about, 'Careers', 'Build intelligent systems with a senior, AI-first team.', 'Explore careers')}
+      </div>
+    </div>`;
+}
+
+function nav(root, home) {
+  const mobLinks = list => list.map(([href, ic, t]) => html`<a class="mob-sub-link" href="${href}">${icon(ic)} ${t}</a>`);
   return html`
 <div class="scroll-progress" aria-hidden="true"></div>
 <nav class="nav-bar" id="navbar" aria-label="Main">
@@ -102,12 +122,11 @@ function nav(root, home) {
       <ul class="nav-menu">
         <li class="nav-item has-mega"><button class="nav-link" aria-expanded="false">Services ${caret}</button>${megaServices(root, home)}</li>
         <li class="nav-item has-mega"><button class="nav-link" aria-expanded="false">Industries ${caret}</button>${megaIndustries(home)}</li>
-        <li class="nav-item has-mega"><button class="nav-link" aria-expanded="false">Technologies ${caret}</button>${megaTech(root, home)}</li>
-        <li class="nav-item"><button class="nav-link" aria-expanded="false">Insights ${caret}</button>${smallDrop(insights)}</li>
-        <li class="nav-item"><button class="nav-link" aria-expanded="false">Company ${caret}</button>${smallDrop(company)}</li>
+        <li class="nav-item has-mega"><button class="nav-link" aria-expanded="false">Insights ${caret}</button>${megaInsights(root)}</li>
+        <li class="nav-item has-mega"><button class="nav-link" aria-expanded="false">Company ${caret}</button>${megaCompany(root, home)}</li>
+        <li class="nav-item"><a class="nav-link" href="${root}careers.html">Careers</a></li>
       </ul>
       <div class="nav-right">
-        <a href="${home}#contact" class="nav-careers">Careers</a>
         <a href="${home}#contact" class="btn btn-blue btn-sm nav-cta" data-magnetic>Contact Us ${icon('arrow-right')}</a>
         <button class="nav-ham" id="navHam" aria-label="Open menu" aria-expanded="false" aria-controls="mobOverlay"><span></span><span></span><span></span></button>
       </div>
@@ -119,17 +138,17 @@ function nav(root, home) {
   <button class="mob-nav-link" aria-expanded="false" aria-controls="msub1">Services ${caret}</button>
   <div class="mob-submenu" id="msub1"><div>
     ${CATEGORIES.map(c => html`<div class="mob-sub-label">${esc(c.name)}</div>${SERVICES.filter(s => s.cat === c.key).map(s => html`<a class="mob-sub-link" href="${svcHref(root, s.slug)}">${icon(s.icon)} ${esc(s.name)}</a>`)}`)}
-    <a class="mob-sub-link" href="${root}services/index.html" style="color:var(--cyan)">${icon('layout-grid')} View all services</a>
+    <a class="mob-sub-link" href="${root}services/index.html" style="color:var(--cyan)">${icon('layout-grid')} Explore our services</a>
   </div></div>
   <button class="mob-nav-link" aria-expanded="false" aria-controls="msub2">Industries ${caret}</button>
   <div class="mob-submenu" id="msub2"><div>
     ${Object.values(INDUSTRIES).map(i => html`<a class="mob-sub-link" href="${home}#industries">${icon(i.icon)} ${esc(i.name)}</a>`)}
   </div></div>
-  <a class="mob-nav-link" href="${home}#technology">Technologies</a>
   <button class="mob-nav-link" aria-expanded="false" aria-controls="msub3">Insights ${caret}</button>
-  <div class="mob-submenu" id="msub3"><div>${mobLinks(insights)}</div></div>
+  <div class="mob-submenu" id="msub3"><div>${mobLinks([[`${root}case-studies/index.html`, 'folder-open', 'Case Studies'], [`${root}blog/index.html`, 'newspaper', 'Blog']])}</div></div>
   <button class="mob-nav-link" aria-expanded="false" aria-controls="msub4">Company ${caret}</button>
-  <div class="mob-submenu" id="msub4"><div>${mobLinks(company)}</div></div>
+  <div class="mob-submenu" id="msub4"><div>${mobLinks([[`${root}about.html`, 'building-2', 'About RixlSoft'], [`${root}about.html#why`, 'gem', 'Why RixlSoft'], [`${home}#contact`, 'mail', 'Contact Us']])}</div></div>
+  <a class="mob-nav-link" href="${root}careers.html">Careers</a>
   <a href="${home}#contact" class="btn btn-blue" style="margin-top:24px;width:100%;justify-content:center;">Contact Us ${icon('arrow-right')}</a>
 </div>`;
 }
@@ -152,12 +171,11 @@ function footer(root, home) {
       ${CATEGORIES.map(c => html`<div class="f-col"><h5>${esc({ digital: 'Engineering', ai: 'AI &amp; Emerging', cloud: 'Cloud &amp; DevOps', crm: 'Salesforce &amp; CRM', specialized: 'Specialized' }[c.key])}</h5><ul class="f-links">${svcLinks(SERVICES.filter(s => s.cat === c.key))}</ul></div>`)}
       <div class="f-col"><h5>Company</h5>
         <ul class="f-links">
-          <li><a href="${home}#about">About RixlSoft</a></li>
+          <li><a href="${root}about.html">About RixlSoft</a></li>
           <li><a href="${root}services/index.html">Our Services</a></li>
-          <li><a href="${home}#industries">Industries</a></li>
-          <li><a href="${home}#process">Our Process</a></li>
-          <li><a href="${home}#insights">Case Studies</a></li>
-          <li><a href="${home}#contact">Careers</a></li>
+          <li><a href="${root}case-studies/index.html">Case Studies</a></li>
+          <li><a href="${root}blog/index.html">Blog</a></li>
+          <li><a href="${root}careers.html">Careers</a></li>
           <li><a href="${home}#contact">Contact Us</a></li>
         </ul>
       </div>
