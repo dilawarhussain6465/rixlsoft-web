@@ -64,15 +64,6 @@
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') { closeAll(); closeMobile(); }
   });
-  /* Services mega menu: hovering a category swaps the panel */
-  $$('[data-ms]').forEach(ms => {
-    const cats = $$('.ms-cat', ms), panels = $$('.ms-panel', ms);
-    const show = key => {
-      cats.forEach(c => c.classList.toggle('on', c.dataset.cat === key));
-      panels.forEach(p => p.classList.toggle('on', p.dataset.panel === key));
-    };
-    cats.forEach(c => { c.addEventListener('pointerenter', () => show(c.dataset.cat)); c.addEventListener('focus', () => show(c.dataset.cat)); c.addEventListener('click', e => { e.stopPropagation(); show(c.dataset.cat); }); });
-  });
 
   /* ---------- Mobile menu ---------- */
   const ham = $('#navHam'), mob = $('#mobOverlay');
@@ -191,6 +182,7 @@
       i = (n + slides.length) % slides.length;
       slides.forEach((s, k) => { s.classList.toggle('on', k === i); s.setAttribute('aria-hidden', String(k !== i)); s.querySelectorAll('a,button').forEach(a => a.tabIndex = k === i ? 0 : -1); });
       tabs.forEach((t, k) => { t.classList.toggle('on', k === i); t.setAttribute('aria-selected', String(k === i)); });
+      const count = $('.hs-count b', root); if (count) count.textContent = String(i + 1).padStart(2, '0');
       schedule();
     };
     const schedule = () => { clearTimeout(timer); if (!reduce && !paused) timer = setTimeout(() => go(i + 1), DUR); };

@@ -21,6 +21,7 @@ export const CATEGORIES = [
 
 // Order here = order in menus / hub.
 export const SERVICES = [
+  { slug: 'digital-transformation', cat: 'digital', name: 'Digital Transformation', short: 'Modernize processes & systems', icon: 'trending-up', photo: '1552664730-d307ca884978' },
   { slug: 'web-development', cat: 'digital', name: 'Web Development', short: 'Scalable web apps & platforms', icon: 'globe', photo: '1460925895917-afdab827c52f' },
   { slug: 'app-development', cat: 'digital', name: 'App Development', short: 'iOS, Android & cross-platform', icon: 'smartphone', photo: '1512941937669-90a1b58e7e9c' },
   { slug: 'custom-software', cat: 'digital', name: 'Custom Software', short: 'Bespoke enterprise solutions', icon: 'blocks', photo: '1555066931-4365d14bab8c' },
