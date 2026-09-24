@@ -1,5 +1,5 @@
-import { esc, icon, brand, html } from './lib.mjs';
-import { CATEGORIES, SERVICES, INDUSTRIES, PHOTOS, img } from './data/site.mjs';
+import { esc, icon, brand, logoName, html } from './lib.mjs';
+import { CATEGORIES, SERVICES, INDUSTRIES, PHOTOS, TECH_STACK, img } from './data/site.mjs';
 
 export const SITE_URL = 'https://dilawarhussain6465.github.io/rixlsoft-web/';
 const caret = '<svg class="nav-caret" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -8,45 +8,88 @@ const svcHref = (root, slug) => `${root}services/${slug}.html`;
 export { svcHref };
 
 function megaServices(root, home) {
-  const cols = CATEGORIES.map(c => html`
-      <div class="drop-col">
-        <div class="drop-col-label">${esc(c.name.replace(' Services', ''))}</div>
-        ${SERVICES.filter(s => s.cat === c.key).map(s => html`
-        <a class="drop-link" href="${svcHref(root, s.slug)}" title="${esc(s.short)}"><span class="d-icon">${icon(s.icon)}</span><span class="d-text">${esc(s.name)}</span></a>`)}
-      </div>`);
   return html`
     <div class="mega-drop">
-      <div class="drop-cols">${cols}</div>
-      <div class="drop-footer">
-        <div class="drop-footer-links">
-          <a class="drop-footer-link" href="${home}#contact">${icon('rocket')} Start a Project</a>
-          <a class="drop-footer-link" href="${root}services/index.html">${icon('layout-grid')} View All Services</a>
-          <a class="drop-footer-link" href="${home}#contact">${icon('message-circle')} Talk to an Expert</a>
+      <div class="ms" data-ms>
+        <div class="ms-rail">
+          <div class="ms-rail-label">Our Services</div>
+          ${CATEGORIES.map((c, i) => html`
+          <button class="ms-cat${i === 0 ? ' on' : ''}" data-cat="${c.key}"><span class="d-icon">${icon(c.icon)}</span><span>${esc(c.name)}<small>${SERVICES.filter(s => s.cat === c.key).length} services</small></span>${icon('chevron-right', 'chev')}</button>`)}
+          <a class="ms-all" href="${root}services/index.html">${icon('layout-grid')} View all 21 services</a>
         </div>
-        <a href="${home}#contact" class="btn btn-blue btn-sm">Get a Quote ${icon('arrow-right')}</a>
+        <div>
+          ${CATEGORIES.map((c, i) => html`
+          <div class="ms-panel${i === 0 ? ' on' : ''}" data-panel="${c.key}">
+            <h4>${esc(c.name)}</h4>
+            <p>${esc(c.blurb)}</p>
+            <div class="ms-links">
+              ${SERVICES.filter(s => s.cat === c.key).map(s => html`
+              <a class="drop-link" href="${svcHref(root, s.slug)}"><span class="d-icon">${icon(s.icon)}</span><span class="d-text">${esc(s.name)}<small>${esc(s.short)}</small></span></a>`)}
+            </div>
+          </div>`)}
+        </div>
+        <a class="ms-feature" href="${home}#contact">
+          <img src="${img(PHOTOS.services, 600)}" alt="" loading="lazy">
+          <span class="tag">Free consultation</span>
+          <h5>Not sure where to start? Talk to a solution architect.</h5>
+          <span class="more">Book a discovery call ${icon('arrow-right')}</span>
+        </a>
       </div>
     </div>`;
 }
 
 function megaIndustries(home) {
-  const biz = ['startups', 'enterprise'];
-  const a = ['fintech', 'healthcare', 'gaming', 'retail', 'edtech'];
-  const b = ['travel', 'real-estate', 'logistics', 'energy', 'telecom'];
-  const link = k => html`<a class="drop-link" href="${home}#industries"><span class="d-icon">${icon(INDUSTRIES[k].icon)}</span><span class="d-text">${esc(INDUSTRIES[k].name)}<small>${esc(INDUSTRIES[k].desc)}</small></span></a>`;
   return html`
     <div class="mega-drop">
-      <div class="drop-cols c3">
-        <div class="drop-col"><div class="drop-col-label">By Business Type</div>${biz.map(link)}
-          <a class="drop-link" href="${home}#contact"><span class="d-icon">${icon('handshake')}</span><span class="d-text">Agencies<small>White-label delivery</small></span></a>
-          <a class="drop-link" href="${home}#contact"><span class="d-icon">${icon('trending-up')}</span><span class="d-text">SMB &amp; Mid-Market<small>Growth &amp; automation</small></span></a>
+      <div class="mg">
+        <div class="mg-body">
+          <div class="mg-head"><h4>Industries We Serve</h4><a href="${home}#industries">Explore industries ${icon('arrow-right')}</a></div>
+          <div class="mg-grid">
+            ${Object.entries(INDUSTRIES).map(([, i]) => html`<a class="drop-link" href="${home}#industries"><span class="d-icon">${icon(i.icon)}</span><span class="d-text">${esc(i.name)}<small>${esc(i.desc)}</small></span></a>`)}
+          </div>
         </div>
-        <div class="drop-col"><div class="drop-col-label">By Industry</div>${a.map(link)}</div>
-        <div class="drop-col"><div class="drop-col-label">More Industries</div>${b.map(link)}</div>
+        <a class="ms-feature mg-feature" href="${home}#contact">
+          <img src="${img(INDUSTRIES.fintech.photo, 600)}" alt="" loading="lazy">
+          <span class="tag">Domain expertise</span>
+          <h5>Software built around the rules of your industry.</h5>
+          <span class="more">Talk to an expert ${icon('arrow-right')}</span>
+        </a>
       </div>
     </div>`;
 }
 
+function megaTech(root, home) {
+  return html`
+    <div class="mega-drop">
+      <div class="mg-body">
+        <div class="mg-head"><h4>Technologies We Master</h4><a href="${home}#technology">See full stack ${icon('arrow-right')}</a></div>
+        <div class="tech-groups">
+          ${TECH_STACK.map(t => html`
+          <div class="tech-group"><h6>${esc(t.group)}</h6><div class="tech-chips">${t.items.slice(0, 6).map(k => html`<a class="tech-chip" href="${home}#technology"><img src="${root}assets/logos/${k}.svg" alt="" width="16" height="16" loading="lazy">${esc(logoName(k))}</a>`)}</div></div>`)}
+        </div>
+      </div>
+    </div>`;
+}
+
+const smallDrop = links => html`
+          <div class="small-drop">${links.map(([href, ic, t, s]) => html`
+            <a class="drop-link" href="${href}"><span class="d-icon">${icon(ic)}</span><span class="d-text">${t}<small>${s}</small></span></a>`)}
+          </div>`;
+
 function nav(root, home) {
+  const insights = [
+    [`${home}#insights`, 'folder-open', 'Case Studies', 'Real project outcomes'],
+    [`${home}#insights`, 'newspaper', 'Blog &amp; Articles', 'Tech insights &amp; guides'],
+    [`${home}#process`, 'workflow', 'How We Deliver', 'Our 5-phase process'],
+  ];
+  const company = [
+    [`${home}#about`, 'building-2', 'About RixlSoft', 'Our story &amp; mission'],
+    [`${home}#about`, 'gem', 'Why RixlSoft', 'What makes us different'],
+    [`${home}#recognition`, 'award', 'Awards &amp; Certifications', 'Partnerships &amp; standards'],
+    [`${home}#contact`, 'briefcase', 'Careers', 'Join our team'],
+    [`${home}#contact`, 'mail', 'Contact Us', 'Start a conversation'],
+  ];
+  const mobLinks = (list) => list.map(([href, ic, t]) => html`<a class="mob-sub-link" href="${href}">${icon(ic)} ${t}</a>`);
   return html`
 <div class="scroll-progress" aria-hidden="true"></div>
 <nav class="nav-bar" id="navbar" aria-label="Main">
@@ -54,27 +97,15 @@ function nav(root, home) {
     <div class="nav-inner">
       <a href="${home}" class="nav-logo" aria-label="RixlSoft home">Rixl<em>Soft</em><i></i></a>
       <ul class="nav-menu">
-        <li class="nav-item has-mega"><button class="nav-link" aria-expanded="false">What We Do ${caret}</button>${megaServices(root, home)}</li>
-        <li class="nav-item has-mega"><button class="nav-link" aria-expanded="false">Who We Help ${caret}</button>${megaIndustries(home)}</li>
-        <li class="nav-item"><button class="nav-link" aria-expanded="false">Who We Are ${caret}</button>
-          <div class="small-drop">
-            <a class="drop-link" href="${home}#about"><span class="d-icon">${icon('building-2')}</span><span class="d-text">About RixlSoft<small>Our story &amp; mission</small></span></a>
-            <a class="drop-link" href="${home}#recognition"><span class="d-icon">${icon('award')}</span><span class="d-text">Awards &amp; Certifications<small>Partnerships &amp; standards</small></span></a>
-            <a class="drop-link" href="${home}#about"><span class="d-icon">${icon('gem')}</span><span class="d-text">Values &amp; Culture<small>How we think &amp; work</small></span></a>
-          </div>
-        </li>
-        <li class="nav-item"><button class="nav-link" aria-expanded="false">How We Deliver ${caret}</button>
-          <div class="small-drop">
-            <a class="drop-link" href="${home}#process"><span class="d-icon">${icon('workflow')}</span><span class="d-text">Our Process<small>How we work</small></span></a>
-            <a class="drop-link" href="${home}#technology"><span class="d-icon">${icon('cpu')}</span><span class="d-text">Technology Stack<small>Tools we master</small></span></a>
-            <a class="drop-link" href="${home}#insights"><span class="d-icon">${icon('folder-open')}</span><span class="d-text">Case Studies<small>Real project outcomes</small></span></a>
-            <a class="drop-link" href="${home}#insights"><span class="d-icon">${icon('newspaper')}</span><span class="d-text">Blog &amp; Articles<small>Tech insights &amp; guides</small></span></a>
-          </div>
-        </li>
+        <li class="nav-item has-mega"><button class="nav-link" aria-expanded="false">Services ${caret}</button>${megaServices(root, home)}</li>
+        <li class="nav-item has-mega"><button class="nav-link" aria-expanded="false">Industries ${caret}</button>${megaIndustries(home)}</li>
+        <li class="nav-item has-mega"><button class="nav-link" aria-expanded="false">Technologies ${caret}</button>${megaTech(root, home)}</li>
+        <li class="nav-item"><button class="nav-link" aria-expanded="false">Insights ${caret}</button>${smallDrop(insights)}</li>
+        <li class="nav-item"><button class="nav-link" aria-expanded="false">Company ${caret}</button>${smallDrop(company)}</li>
       </ul>
       <div class="nav-right">
-        <a href="${home}#contact" class="nav-careers">Explore Careers</a>
-        <a href="${home}#contact" class="btn btn-blue btn-sm nav-cta" data-magnetic>Let's Talk Business</a>
+        <a href="${home}#contact" class="nav-careers">Careers</a>
+        <a href="${home}#contact" class="btn btn-blue btn-sm nav-cta" data-magnetic>Contact Us ${icon('arrow-right')}</a>
         <button class="nav-ham" id="navHam" aria-label="Open menu" aria-expanded="false" aria-controls="mobOverlay"><span></span><span></span><span></span></button>
       </div>
     </div>
@@ -82,19 +113,21 @@ function nav(root, home) {
 </nav>
 
 <div class="mob-overlay" id="mobOverlay">
-  <button class="mob-nav-link" aria-expanded="false" aria-controls="msub1">What We Do ${caret}</button>
+  <button class="mob-nav-link" aria-expanded="false" aria-controls="msub1">Services ${caret}</button>
   <div class="mob-submenu" id="msub1"><div>
     ${CATEGORIES.map(c => html`<div class="mob-sub-label">${esc(c.name)}</div>${SERVICES.filter(s => s.cat === c.key).map(s => html`<a class="mob-sub-link" href="${svcHref(root, s.slug)}">${icon(s.icon)} ${esc(s.name)}</a>`)}`)}
     <a class="mob-sub-link" href="${root}services/index.html" style="color:var(--cyan)">${icon('layout-grid')} View all services</a>
   </div></div>
-  <button class="mob-nav-link" aria-expanded="false" aria-controls="msub2">Who We Help ${caret}</button>
+  <button class="mob-nav-link" aria-expanded="false" aria-controls="msub2">Industries ${caret}</button>
   <div class="mob-submenu" id="msub2"><div>
     ${Object.values(INDUSTRIES).map(i => html`<a class="mob-sub-link" href="${home}#industries">${icon(i.icon)} ${esc(i.name)}</a>`)}
   </div></div>
-  <a class="mob-nav-link" href="${home}#about">Who We Are</a>
-  <a class="mob-nav-link" href="${home}#process">How We Deliver</a>
-  <a class="mob-nav-link" href="${home}#insights">Insights</a>
-  <a href="${home}#contact" class="btn btn-blue" style="margin-top:24px;width:100%;justify-content:center;">Let's Talk Business ${icon('arrow-right')}</a>
+  <a class="mob-nav-link" href="${home}#technology">Technologies</a>
+  <button class="mob-nav-link" aria-expanded="false" aria-controls="msub3">Insights ${caret}</button>
+  <div class="mob-submenu" id="msub3"><div>${mobLinks(insights)}</div></div>
+  <button class="mob-nav-link" aria-expanded="false" aria-controls="msub4">Company ${caret}</button>
+  <div class="mob-submenu" id="msub4"><div>${mobLinks(company)}</div></div>
+  <a href="${home}#contact" class="btn btn-blue" style="margin-top:24px;width:100%;justify-content:center;">Contact Us ${icon('arrow-right')}</a>
 </div>`;
 }
 
@@ -154,7 +187,7 @@ export function layout(p) {
   const url = SITE_URL + p.path;
   const ld = (p.jsonld || []).map(o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n');
   return `<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
