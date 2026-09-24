@@ -1,6 +1,11 @@
 import { esc, rich, icon, logo, logoName, html } from '../lib.mjs';
 import { SERVICES, INDUSTRIES, HOME_INDUSTRIES, PHOTOS, TECH_STACK, img } from '../data/site.mjs';
 import { svcHref } from '../layout.mjs';
+import { whySection } from './company.mjs';
+import { csCard, blogCard } from './articles.mjs';
+import CASE_STUDIES from '../data/case-studies.mjs';
+import BLOG from '../data/blog.mjs';
+import { ARTICLE_PHOTOS, CONTACT_EMAIL } from '../data/site.mjs';
 
 const R = ''; // root prefix for the home page
 
@@ -41,34 +46,12 @@ const SHOWCASE = [
     text: 'Senior engineers who join your team in days.' },
 ];
 
-const PROCESS = [
+export const PROCESS = [
   { icon: 'search', title: 'Discover', desc: 'Goals, pain points and success metrics — we find where technology creates the most leverage.', deliv: 'Problem brief · Scope' },
   { icon: 'drafting-compass', title: 'Design & Validate', desc: 'Architecture, user flows and clickable prototypes, validated before any code is written.', deliv: 'Tech spec · Prototype' },
   { icon: 'code-xml', title: 'Build', desc: 'Agile sprints with weekly demos and production-grade, tested code from day one.', deliv: 'Weekly builds · Staging' },
   { icon: 'rocket', title: 'Launch', desc: 'Pipelines, security hardening and a rehearsed go-live — never a scramble.', deliv: 'Production deploy · QA report' },
   { icon: 'refresh-cw', title: 'Evolve', desc: 'Monitoring, new features and model tuning as your business grows.', deliv: 'Retainer · Roadmap reviews' },
-];
-
-const INSIGHTS = [
-  { type: 'Case Study', date: 'March 2025', photo: '1565869764622-26609bd61b3f', result: '200K downloads in 30 days',
-    title: 'Mobile Gaming Studio Launches AR Title to 200K Downloads in 30 Days',
-    desc: 'An AR-powered mobile game taken from concept to the App Store in 14 weeks — with live-ops tooling that kept players coming back after launch.' },
-  { type: 'Case Study', date: 'February 2025', photo: '1518186285589-2f7649de83e0', result: '$2M+ raised',
-    title: "US Fintech's AI Financial Modeling Platform Secures $2M+ Funding" },
-  { type: 'Case Study', date: 'January 2025', photo: '1556740738-b6a63e27c4df', result: '100x traffic, zero downtime',
-    title: 'E-Commerce Platform Scales from 10K to 1M Monthly Users' },
-  { type: 'Blog', date: 'April 2025', photo: '1593508512255-86ab42a8e620', result: '6 min read',
-    title: "The Future of AR/VR in Enterprise: What's Coming in 2025–2026" },
-  { type: 'Blog', date: 'March 2025', photo: '1620712943543-bcc4688e7485', result: '5 min read',
-    title: 'How Generative AI Is Transforming Business Operations' },
-];
-
-const AWARDS = [
-  { logo: 'aws', t: 'AWS Partner', s: 'Certified Cloud Solutions' },
-  { logo: 'googlecloud', t: 'Google Cloud', s: 'Build Partner Program' },
-  { icon: 'star', t: 'Top Rated — Clutch', s: '5.0 / 5.0 reviews' },
-  { icon: 'shield-check', t: 'ISO 9001 Aligned', s: 'Quality Management' },
-  { logo: 'meta', t: 'Meta Spark Partner', s: 'AR Development' },
 ];
 
 export function home() {
@@ -141,9 +124,6 @@ export function home() {
       <div class="stat-box"><span class="s-ico">${icon('handshake')}</span><div class="stat-num" data-count="40">40<em>+</em></div><div class="l">Active Clients</div></div>
       <div class="stat-box"><span class="s-ico">${icon('smile')}</span><div class="stat-num" data-count="98">98<em>%</em></div><div class="l">Client Satisfaction</div></div>
     </div>
-    <div class="awards-strip" id="recognition" data-stagger=".08" data-reveal-type="up">
-      ${AWARDS.map(a => html`<div class="award-pill"><span class="ap-logo">${a.logo ? logo(a.logo, R, 28) : icon(a.icon)}</span><span><strong>${a.t}</strong><small>${a.s}</small></span></div>`)}
-    </div>
   </div>
 </section>
 
@@ -170,28 +150,7 @@ export function home() {
 </section>
 
 <!-- ================= WHY RIXLSOFT ================= -->
-<section class="sec bg-alt" id="about">
-  <div class="container">
-    <div class="split">
-      <div class="media-stack" data-reveal="clip">
-        <div class="media-dots"></div>
-        <div class="media-main"><img src="${img(PHOTOS.about, 1000)}" alt="RixlSoft team planning a product roadmap" loading="lazy" data-parallax=".08"></div>
-        <div class="media-badge"><span class="b-ico">${icon('sparkles')}</span><div><strong>AI-Native</strong><span>since day one, 2024</span></div></div>
-      </div>
-      <div class="why-text">
-        <div class="sec-badge" data-reveal="up">Why RixlSoft</div>
-        <h2 class="h2" data-split>Not a Software House. <em>A Systems Partner.</em></h2>
-        <p data-reveal="up">Traditional agencies ship features. We build intelligent systems engineered around your business — systems that automate, adapt and scale with you, at the intersection of AI, games, immersive tech and product engineering.</p>
-        <div class="pillars" data-stagger=".1" data-reveal-type="up">
-          <div class="pillar spot"><span class="p-ico">${icon('zap')}</span><h4>AI-Native from Day One</h4><p>Intelligence is the foundation of every system we build.</p></div>
-          <div class="pillar spot"><span class="p-ico">${icon('gamepad-2')}</span><h4>Games &amp; Immersive Specialists</h4><p>From mobile games to enterprise AR/VR.</p></div>
-          <div class="pillar spot"><span class="p-ico">${icon('target')}</span><h4>One Accountable Team</h4><p>Design, AI, engineering and cloud — no handoffs.</p></div>
-          <div class="pillar spot"><span class="p-ico">${icon('ruler')}</span><h4>Built for Scale</h4><p>Architecture planned on 3-year growth horizons.</p></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+${whySection('')}
 
 <!-- ================= PROCESS (compact) ================= -->
 <section class="sec" id="process">
@@ -237,40 +196,54 @@ export function home() {
   </div>
 </section>
 
-<!-- ================= INSIGHTS (compact) ================= -->
+<!-- ================= CASE STUDIES ================= -->
 <section class="sec" id="insights">
   <div class="container">
     <div class="sec-head-row">
       <div class="sec-head left" data-reveal="up">
-        <div class="sec-badge">Featured Insights</div>
-        <h2 data-split>Case Studies &amp; <em>Ideas</em></h2>
-        <p>Real outcomes from our projects, and what we're learning along the way.</p>
+        <div class="sec-badge">Case Studies</div>
+        <h2 data-split>Real Projects. <em>Measurable Outcomes.</em></h2>
+        <p>How we help startups and enterprises ship AI products, games, platforms and CRM transformations.</p>
       </div>
-      <a href="#contact" class="btn btn-outline-blue" data-reveal="left">Request Full Case Studies ${icon('arrow-right')}</a>
+      <a href="case-studies/index.html" class="btn btn-outline-blue" data-reveal="left">All Case Studies ${icon('arrow-right')}</a>
     </div>
     <div class="ins">
-      ${(() => { const f = INSIGHTS[0]; return html`
-      <article class="ins-feature" data-reveal="clip">
-        <img src="${img(f.photo, 1000)}" alt="" loading="lazy">
+      ${(() => { const f = CASE_STUDIES[0]; return html`
+      <a class="ins-feature" href="case-studies/${f.slug}.html" data-reveal="clip">
+        <img src="${img(ARTICLE_PHOTOS[f.slug], 1000)}" alt="" loading="lazy">
         <div class="ins-feature-body">
-          <div class="ins-meta"><span class="ins-type">${f.type}</span>${f.date}</div>
+          <div class="ins-meta"><span class="ins-type">Case Study</span>${esc(f.date)}</div>
           <h3>${esc(f.title)}</h3>
-          <p>${esc(f.desc)}</p>
-          <div class="ins-result">${icon('trending-up')} ${esc(f.result)}</div>
+          <p>${esc(f.summary)}</p>
+          <div class="ins-result">${icon('trending-up')} ${esc(f.results[0].value + (f.results[0].suffix || ''))} ${esc(f.results[0].label.toLowerCase())}</div>
         </div>
-      </article>`; })()}
+      </a>`; })()}
       <div class="ins-list" data-stagger=".08" data-reveal-type="left">
-        ${INSIGHTS.slice(1).map(p => html`
-        <article class="ins-item">
-          <div class="ins-thumb"><img src="${img(p.photo, 300)}" alt="" loading="lazy"></div>
+        ${CASE_STUDIES.slice(1).map(c => html`
+        <a class="ins-item" href="case-studies/${c.slug}.html">
+          <div class="ins-thumb"><img src="${img(ARTICLE_PHOTOS[c.slug], 300)}" alt="" loading="lazy"></div>
           <div>
-            <div class="ins-meta"><span class="ins-type${p.type === 'Blog' ? ' blog' : ''}">${p.type}</span>${p.date}</div>
-            <h4>${esc(p.title)}</h4>
-            <div class="ins-result">${icon(p.type === 'Blog' ? 'clock' : 'trending-up')} ${esc(p.result)}</div>
+            <div class="ins-meta"><span class="ins-type">${esc(INDUSTRIES[c.industry].name)}</span>${esc(c.date)}</div>
+            <h4>${esc(c.title)}</h4>
+            <div class="ins-result">${icon('trending-up')} ${esc(c.results[0].value + (c.results[0].suffix || ''))} ${esc(c.results[0].label.toLowerCase())}</div>
           </div>
-        </article>`)}
+        </a>`)}
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ================= BLOG ================= -->
+<section class="sec bg-light" id="blog">
+  <div class="container">
+    <div class="sec-head-row">
+      <div class="sec-head left" data-reveal="up">
+        <div class="sec-badge">From the Blog</div>
+        <h2 data-split>Insights on AI, Cloud &amp; <em>What Comes Next</em></h2>
+      </div>
+      <a href="blog/index.html" class="btn btn-outline-blue" data-reveal="left">All Articles ${icon('arrow-right')}</a>
+    </div>
+    <div class="cs-grid" data-stagger=".08" data-reveal-type="up">${BLOG.slice(0, 3).map(b => blogCard(b, ''))}</div>
   </div>
 </section>
 
@@ -296,7 +269,7 @@ export function contactSection() {
           <div class="cta-info"><span class="ci-icon">${icon('messages-square')}</span><span>Free initial consultation</span></div>
         </div>
       </div>
-      <form class="cta-form" id="contactForm" novalidate data-reveal="right">
+      <form class="cta-form" id="contactForm" novalidate data-mailto="${CONTACT_EMAIL}" data-subject="Project enquiry" data-reveal="right">
         <div class="form-row">
           <div class="form-group"><label for="f-name">Full Name *</label><input id="f-name" name="Name" type="text" class="form-control" placeholder="Your full name" required autocomplete="name"></div>
           <div class="form-group"><label for="f-email">Email *</label><input id="f-email" name="Email" type="email" class="form-control" placeholder="work@company.com" required autocomplete="email"></div>

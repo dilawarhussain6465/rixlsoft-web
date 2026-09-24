@@ -8,6 +8,10 @@ import { layout, SITE_URL } from './layout.mjs';
 import { home, contactSection } from './pages/home.mjs';
 import { servicePage } from './pages/service.mjs';
 import { hubPage } from './pages/hub.mjs';
+import { caseStudiesIndex, caseStudyPage, blogIndex, blogPage } from './pages/articles.mjs';
+import { aboutPage, careersPage } from './pages/company.mjs';
+import CASE_STUDIES from './data/case-studies.mjs';
+import BLOG from './data/blog.mjs';
 import { SERVICES } from './data/site.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -49,7 +53,19 @@ for (const meta of SERVICES) {
   write(`services/${meta.slug}.html`, layout({ root: '../', path: `services/${meta.slug}.html`, ...p, body: p.body + contactSection() }));
 }
 
+// Company pages
+write('about.html', layout({ root: '', path: 'about.html', ...aboutPage(), body: aboutPage().body + contactSection() }));
+write('careers.html', layout({ root: '', path: 'careers.html', ...careersPage() }));
+
+// Case studies & blog
+const csIdx = caseStudiesIndex();
+write('case-studies/index.html', layout({ root: '../', path: 'case-studies/', ...csIdx, body: csIdx.body + contactSection() }));
+for (const c of CASE_STUDIES) { const p = caseStudyPage(c); write(`case-studies/${c.slug}.html`, layout({ root: '../', path: `case-studies/${c.slug}.html`, ...p, body: p.body + contactSection() })); }
+const bIdx = blogIndex();
+write('blog/index.html', layout({ root: '../', path: 'blog/', ...bIdx, body: bIdx.body + contactSection() }));
+for (const b of BLOG) { const p = blogPage(b); write(`blog/${b.slug}.html`, layout({ root: '../', path: `blog/${b.slug}.html`, ...p, body: p.body + contactSection() })); }
+
 // Sitemap
-const urls = ['', 'services/', ...SERVICES.map(s => `services/${s.slug}.html`)];
+const urls = ['', 'about.html', 'careers.html', 'services/', ...SERVICES.map(s => `services/${s.slug}.html`), 'case-studies/', ...CASE_STUDIES.map(c => `case-studies/${c.slug}.html`), 'blog/', ...BLOG.map(b => `blog/${b.slug}.html`)];
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${SITE_URL}${u}</loc></url>`).join('\n')}\n</urlset>\n`);
 console.log(`Done — ${urls.length} pages.`);

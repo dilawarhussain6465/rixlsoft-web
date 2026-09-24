@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/</loc></url>
+  <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/about.html</loc></url>
+  <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/careers.html</loc></url>
   <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/services/</loc></url>
   <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/services/digital-transformation.html</loc></url>
   <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/services/web-development.html</loc></url>
@@ -29,4 +31,16 @@
   <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/services/art-design.html</loc></url>
   <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/services/maintenance-support.html</loc></url>
   <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/services/automation-apps.html</loc></url>
+  <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/case-studies/</loc></url>
+  <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/case-studies/ar-mobile-game-launch.html</loc></url>
+  <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/case-studies/fintech-ai-financial-modeling.html</loc></url>
+  <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/case-studies/ecommerce-scale-1m-users.html</loc></url>
+  <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/case-studies/healthcare-document-ai.html</loc></url>
+  <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/case-studies/salesforce-logistics-crm.html</loc></url>
+  <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/blog/</loc></url>
+  <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/blog/agentic-ai-enterprise-2026.html</loc></url>
+  <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/blog/legacy-modernization-ai-era.html</loc></url>
+  <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/blog/ai-powered-crm-salesforce-hubspot.html</loc></url>
+  <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/blog/spatial-computing-enterprise-roi.html</loc></url>
+  <url><loc>https://dilawarhussain6465.github.io/rixlsoft-web/blog/finops-cloud-cost-optimization.html</loc></url>
 </urlset>

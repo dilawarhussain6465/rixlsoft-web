@@ -167,5 +167,6 @@ export const LOGOS = {
  "mailchimp": "Mailchimp",
  "twilio": "Twilio",
  "docusign": "DocuSign",
- "apex": "Apex"
+ "apex": "Apex",
+ "microsoft": "Microsoft"
 };

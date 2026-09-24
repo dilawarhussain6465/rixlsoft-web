@@ -82,3 +82,34 @@ export const TECH_STACK = [
   { group: 'CRM & Business', items: ['salesforce', 'hubspot', 'dynamics365', 'zoho', 'mulesoft', 'tableau', 'zendesk'] },
   { group: 'Mobile & Data', items: ['flutter', 'reactnative', 'swift', 'kotlin', 'postgresql', 'mongodb', 'redis', 'supabase', 'firebase'] },
 ];
+
+export const CONTACT_EMAIL = 'hello@rixlsoft.com';
+export const CAREERS_EMAIL = 'hello@rixlsoft.com'; // change to a dedicated careers inbox when available
+
+// Verified photos for case studies and blog posts (by slug)
+export const ARTICLE_PHOTOS = {
+  'ar-mobile-game-launch': '1565869764622-26609bd61b3f',
+  'fintech-ai-financial-modeling': '1518186285589-2f7649de83e0',
+  'ecommerce-scale-1m-users': '1556740738-b6a63e27c4df',
+  'healthcare-document-ai': '1576091160550-2173dba999ef',
+  'salesforce-logistics-crm': '1586528116311-ad8dd3c8310d',
+  'agentic-ai-enterprise-2026': '1620712943543-bcc4688e7485',
+  'legacy-modernization-ai-era': '1592609931095-54a2168ae893',
+  'ai-powered-crm-salesforce-hubspot': '1599658880436-c61792e70672',
+  'spatial-computing-enterprise-roi': '1593508512255-86ab42a8e620',
+  'finops-cloud-cost-optimization': '1526628953301-3e589a6a8b74',
+};
+
+// Platforms we build on (About + home "Why RixlSoft")
+export const PLATFORMS = [
+  { logo: 'microsoft', name: 'Microsoft', tag: 'Dynamics 365 · Azure', text: 'Dynamics 365 CRM, Power Platform automation and Azure-native applications for Microsoft-first organizations.' },
+  { logo: 'salesforce', name: 'Salesforce', tag: 'Sales · Service · Agentforce', text: 'Sales, Service and Marketing Cloud implementations, Apex and Lightning development, and AI-assisted CRM.' },
+  { logo: 'shopify', name: 'Shopify', tag: 'Storefronts · Apps', text: 'High-converting Shopify storefronts, custom apps and headless commerce built for real order volume.' },
+  { logo: 'aws', name: 'AWS', tag: 'Cloud · Data · AI', text: 'Cloud-native builds, migrations and data platforms on AWS, engineered for uptime and predictable cost.' },
+];
+export const RECOGNITION = [
+  { logo: 'aws', t: 'AWS Partner' },
+  { logo: 'googlecloud', t: 'Google Cloud Build Partner' },
+  { icon: 'star', t: 'Top Rated on Clutch' },
+  { icon: 'shield-check', t: 'ISO 9001 Aligned' },
+];
