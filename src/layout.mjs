@@ -1,5 +1,13 @@
+import fs from 'node:fs';
+import crypto from 'node:crypto';
 import { esc, icon, brand, logoName, html } from './lib.mjs';
 import { CATEGORIES, SERVICES, INDUSTRIES, PHOTOS, TECH_STACK, img } from './data/site.mjs';
+
+// Cache-busting: the asset URL changes whenever the file's content changes,
+// so browsers/GitHub Pages never pair new HTML with a stale stylesheet or script.
+const version = file => crypto.createHash('md5').update(fs.readFileSync(new URL(`../${file}`, import.meta.url))).digest('hex').slice(0, 10);
+const CSS_V = version('assets/css/main.css');
+const JS_V = version('assets/js/main.js');
 
 export const SITE_URL = 'https://dilawarhussain6465.github.io/rixlsoft-web/';
 const caret = '<svg class="nav-caret" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -207,7 +215,7 @@ export function layout(p) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="${p.root}assets/css/main.css">
+<link rel="stylesheet" href="${p.root}assets/css/main.css?v=${CSS_V}">
 ${ld}
 </head>
 <body>
@@ -217,7 +225,7 @@ ${nav(p.root, home)}
 ${p.body}
 </main>
 ${footer(p.root, home)}
-<script src="${p.root}assets/js/main.js" defer></script>
+<script src="${p.root}assets/js/main.js?v=${JS_V}" defer></script>
 </body>
 </html>
 `;
