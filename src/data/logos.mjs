@@ -158,5 +158,14 @@ export const LOGOS = {
  "whatsapp": "WhatsApp",
  "notion": "Notion",
  "cursor": "Cursor",
- "githubcopilot": "GitHub Copilot"
+ "githubcopilot": "GitHub Copilot",
+ "dynamics365": "Dynamics 365",
+ "zoho": "Zoho",
+ "mulesoft": "MuleSoft",
+ "zendesk": "Zendesk",
+ "intercom": "Intercom",
+ "mailchimp": "Mailchimp",
+ "twilio": "Twilio",
+ "docusign": "DocuSign",
+ "apex": "Apex"
 };

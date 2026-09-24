@@ -15,6 +15,8 @@ export const CATEGORIES = [
     blurb: 'Generative AI, immersive XR, games, Web3 and data — the technologies defining the next decade.' },
   { key: 'cloud', name: 'Cloud & DevOps', icon: 'cloud', photo: '1451187580459-43490279c0fa',
     blurb: 'Cloud-native builds, migrations, automated delivery and security hardening across AWS, GCP and Azure.' },
+  { key: 'crm', name: 'Salesforce & CRM', icon: 'contact', photo: '1553877522-43269d4ea984',
+    blurb: 'Salesforce, HubSpot and Dynamics 365 implementations, custom development and integrations that turn your CRM into a growth engine.' },
   { key: 'specialized', name: 'Specialized Services', icon: 'sparkles', photo: '1522071820081-009f0129c71c',
     blurb: 'Dedicated engineers, QA, commerce, creative art and ongoing care to round out your product team.' },
 ];
@@ -39,6 +41,12 @@ export const SERVICES = [
   { slug: 'devops-ci-cd', cat: 'cloud', name: 'DevOps & CI/CD', short: 'Pipelines & infrastructure', icon: 'infinity', photo: '1461749280684-dccba630e2f6' },
   { slug: 'cybersecurity', cat: 'cloud', name: 'Cybersecurity', short: 'Security audits & hardening', icon: 'shield-check', photo: '1550751827-4bd374c3f58b' },
   { slug: 'cloud-maintenance', cat: 'cloud', name: 'Cloud Maintenance', short: 'Monitoring & optimization', icon: 'activity', photo: '1558494949-ef010cbdcc31' },
+
+  { slug: 'salesforce-consulting', cat: 'crm', name: 'Salesforce Consulting', short: 'Implementation & optimization', icon: 'cloud-cog', photo: '1553877522-43269d4ea984' },
+  { slug: 'salesforce-development', cat: 'crm', name: 'Salesforce Development', short: 'Apex, LWC & AppExchange', icon: 'code', photo: '1498050108023-c5249f4df085' },
+  { slug: 'hubspot-crm', cat: 'crm', name: 'HubSpot CRM', short: 'Sales, marketing & service hubs', icon: 'magnet', photo: '1460925895917-afdab827c52f' },
+  { slug: 'dynamics-365', cat: 'crm', name: 'Microsoft Dynamics 365', short: 'Dynamics & Power Platform', icon: 'layout-dashboard', photo: '1454165804606-c3d57bc86b40' },
+  { slug: 'crm-integration', cat: 'crm', name: 'CRM Integration & Migration', short: 'Connect, migrate & clean data', icon: 'git-merge', photo: '1551288049-bebda4e38f71' },
 
   { slug: 'staff-augmentation', cat: 'specialized', name: 'Staff Augmentation', short: 'Embed expert engineers', icon: 'users', photo: '1522071820081-009f0129c71c' },
   { slug: 'quality-assurance', cat: 'specialized', name: 'Quality Assurance', short: 'Testing & QA automation', icon: 'badge-check', photo: '1516321318423-f06f85e504b3' },
@@ -71,5 +79,6 @@ export const TECH_STACK = [
   { group: 'AI & ML', items: ['openai', 'claude', 'gemini', 'langchain', 'huggingface', 'pytorch', 'tensorflow'] },
   { group: 'Game & XR', items: ['unity', 'unrealengine', 'blender', 'oculus', 'webgl', 'godot', 'babylonjs'] },
   { group: 'Cloud & DevOps', items: ['aws', 'googlecloud', 'azure', 'docker', 'kubernetes', 'terraform', 'githubactions'] },
+  { group: 'CRM & Business', items: ['salesforce', 'hubspot', 'dynamics365', 'zoho', 'mulesoft', 'tableau', 'zendesk'] },
   { group: 'Mobile & Data', items: ['flutter', 'reactnative', 'swift', 'kotlin', 'postgresql', 'mongodb', 'redis', 'supabase', 'firebase'] },
 ];

@@ -16,6 +16,8 @@ const SLIDES = [
     text: 'Mixed-reality apps for Meta Quest, Apple Vision Pro and the browser — interactive training, product visualization and virtual showrooms.' },
   { tag: 'Web & Mobile Apps', title: 'Web &amp; mobile apps <em>users love</em>, built to scale.', photo: '1512941937669-90a1b58e7e9c', link: 'app-development',
     text: 'High-performance web platforms and native-quality iOS and Android apps — designed for conversion and engineered to scale.' },
+  { tag: 'Salesforce & CRM', title: 'Salesforce &amp; CRM that <em>your sales team actually uses</em>.', photo: '1553877522-43269d4ea984', link: 'salesforce-consulting',
+    text: 'Salesforce, HubSpot and Dynamics 365 implementations, custom development and integrations that give every team one view of the customer.' },
   { tag: 'Cloud & DevOps', title: 'Cloud platforms engineered for <em>99.9% uptime</em>.', photo: '1451187580459-43490279c0fa', link: 'cloud-applications',
     text: 'Cloud-native builds, zero-downtime migrations and automated CI/CD pipelines across AWS, Google Cloud and Azure.' },
 ];
@@ -96,10 +98,6 @@ export function home() {
         <div class="hs-logos">${POWERED.map(k => html`<span>${logo(k, R, 22)}${esc(logoName(k))}</span>`)}</div>
       </div>
       <div class="hs-ctrl">
-        <div class="hs-dots" role="tablist" aria-label="Choose slide">
-          ${SLIDES.map((s, i) => html`<button class="hs-tab${i === 0 ? ' on' : ''}" role="tab" aria-selected="${i === 0}" aria-label="Slide ${i + 1}: ${esc(s.tag)}"><span class="bar"><i></i></span></button>`)}
-        </div>
-        <div class="hs-count"><b>01</b> / 0${SLIDES.length}</div>
         <button class="hs-arrow" data-dir="-1" aria-label="Previous slide">${icon('arrow-left')}</button>
         <button class="hs-arrow" data-dir="1" aria-label="Next slide">${icon('arrow-right')}</button>
       </div>
@@ -114,7 +112,7 @@ export function home() {
       <div class="sec-head left">
         <div class="sec-badge">What We Do</div>
         <h2>Engineering the Technologies <em>That Matter Most</em></h2>
-        <p>Specialist services across four practices — from AI and games to cloud, transformation and dedicated teams.</p>
+        <p>Specialist services across five practices — from AI and games to cloud, Salesforce &amp; CRM, transformation and dedicated teams.</p>
       </div>
       <a href="services/index.html" class="btn btn-outline-blue" data-reveal="left">View All Services ${icon('arrow-right')}</a>
     </div>
