@@ -12,11 +12,11 @@ const SLIDES = [
     text: 'LLM copilots, RAG knowledge assistants and autonomous agents grounded in your own data — with evaluation, guardrails and cost control built in.' },
   { tag: 'Game Development', title: "Games players <em>can't put down</em>, on every platform.", photo: '1542751371-adc38448a05e', link: 'game-development',
     text: 'Full-cycle mobile, PC and console game development in Unity and Unreal — from concept art and prototypes to multiplayer and live-ops.' },
-  { tag: 'AR / VR / Mixed Reality', title: 'Immersive AR &amp; VR for <em>training, retail and play</em>.', photo: '1593508512255-86ab42a8e620', link: 'ar-vr-xr',
+  { tag: 'AR / VR / Mixed Reality', title: 'Immersive AR &amp; VR for <em>training, retail and play</em>.', photo: '1552871419-81ba9b1aa9c9', link: 'ar-vr-xr',
     text: 'Mixed-reality apps for Meta Quest, Apple Vision Pro and the browser — interactive training, product visualization and virtual showrooms.' },
   { tag: 'Web & Mobile Apps', title: 'Web &amp; mobile apps <em>users love</em>, built to scale.', photo: '1512941937669-90a1b58e7e9c', link: 'app-development',
     text: 'High-performance web platforms and native-quality iOS and Android apps — designed for conversion and engineered to scale.' },
-  { tag: 'Salesforce & CRM', title: 'Salesforce &amp; CRM that <em>your sales team actually uses</em>.', photo: '1553877522-43269d4ea984', link: 'salesforce-consulting',
+  { tag: 'Salesforce & CRM', title: 'Salesforce &amp; CRM that <em>your sales team actually uses</em>.', photo: '1517048676732-d65bc937f952', link: 'salesforce-consulting',
     text: 'Salesforce, HubSpot and Dynamics 365 implementations, custom development and integrations that give every team one view of the customer.' },
   { tag: 'Cloud & DevOps', title: 'Cloud platforms engineered for <em>99.9% uptime</em>.', photo: '1451187580459-43490279c0fa', link: 'cloud-applications',
     text: 'Cloud-native builds, zero-downtime migrations and automated CI/CD pipelines across AWS, Google Cloud and Azure.' },
@@ -25,19 +25,19 @@ const POWERED = ['openai', 'claude', 'aws', 'googlecloud', 'unity', 'flutter'];
 
 // Image showcase (bento grid). `area` maps to grid-template-areas in CSS.
 const SHOWCASE = [
-  { area: 'g', slug: 'game-development', title: 'Game Development', tag: 'Unity · Unreal · Mobile', photo: '1511512578047-dfb367046420',
+  { area: 'g', slug: 'game-development', title: 'Game Development', tag: 'Unity · Unreal · Mobile', photo: '1583162520080-73d4a743a776',
     text: 'Hyper-casual to core titles for mobile, PC and console — art, gameplay, multiplayer and live-ops under one roof.' },
   { area: 'a', slug: 'generative-ai', title: 'Generative AI & ML', tag: 'LLMs · RAG · Agents', photo: '1485827404703-89b55fcc595e',
     text: 'Copilots, knowledge assistants and AI agents that automate real work, grounded in your data.' },
-  { area: 'x', slug: 'ar-vr-xr', title: 'AR / VR / XR', tag: 'Meta Quest · WebXR', photo: '1535223289827-42f1e9919769',
+  { area: 'x', slug: 'ar-vr-xr', title: 'AR / VR / XR', tag: 'Meta Quest · WebXR', photo: '1552871419-81ba9b1aa9c9',
     text: 'Immersive training, showrooms and experiences.' },
   { area: 'b', slug: 'digital-transformation', title: 'Digital Transformation', tag: 'Modernize · Automate', photo: '1552664730-d307ca884978',
     text: 'Modernize legacy systems and processes, phase by phase.' },
-  { area: 'w', slug: 'web-development', title: 'Web & App Development', tag: 'React · Next.js · Flutter', photo: '1460925895917-afdab827c52f',
+  { area: 'w', slug: 'web-development', title: 'Web & App Development', tag: 'React · Next.js · Flutter', photo: '1619410283995-43d9134e7656',
     text: 'Fast, secure web platforms and mobile apps built to convert and to scale.' },
-  { area: 'c', slug: 'cloud-applications', title: 'Cloud & DevOps', tag: 'AWS · GCP · Azure', photo: '1558494949-ef010cbdcc31',
+  { area: 'c', slug: 'cloud-applications', title: 'Cloud & DevOps', tag: 'AWS · GCP · Azure', photo: '1644088379091-d574269d422f',
     text: 'Cloud-native builds and automated delivery.' },
-  { area: 'd', slug: 'staff-augmentation', title: 'Staff Augmentation', tag: 'Hire engineers', photo: '1522071820081-009f0129c71c',
+  { area: 'd', slug: 'staff-augmentation', title: 'Staff Augmentation', tag: 'Hire engineers', photo: '1606857521015-7f9fcf423740',
     text: 'Senior engineers who join your team in days.' },
 ];
 
@@ -50,16 +50,16 @@ const PROCESS = [
 ];
 
 const INSIGHTS = [
-  { type: 'Case Study', date: 'March 2025', photo: '1542751371-adc38448a05e', result: '200K downloads in 30 days',
+  { type: 'Case Study', date: 'March 2025', photo: '1565869764622-26609bd61b3f', result: '200K downloads in 30 days',
     title: 'Mobile Gaming Studio Launches AR Title to 200K Downloads in 30 Days',
     desc: 'An AR-powered mobile game taken from concept to the App Store in 14 weeks — with live-ops tooling that kept players coming back after launch.' },
-  { type: 'Case Study', date: 'February 2025', photo: '1551288049-bebda4e38f71', result: '$2M+ raised',
+  { type: 'Case Study', date: 'February 2025', photo: '1518186285589-2f7649de83e0', result: '$2M+ raised',
     title: "US Fintech's AI Financial Modeling Platform Secures $2M+ Funding" },
-  { type: 'Case Study', date: 'January 2025', photo: '1556742049-0cfed4f6a45d', result: '100x traffic, zero downtime',
+  { type: 'Case Study', date: 'January 2025', photo: '1556740738-b6a63e27c4df', result: '100x traffic, zero downtime',
     title: 'E-Commerce Platform Scales from 10K to 1M Monthly Users' },
   { type: 'Blog', date: 'April 2025', photo: '1593508512255-86ab42a8e620', result: '6 min read',
     title: "The Future of AR/VR in Enterprise: What's Coming in 2025–2026" },
-  { type: 'Blog', date: 'March 2025', photo: '1485827404703-89b55fcc595e', result: '5 min read',
+  { type: 'Blog', date: 'March 2025', photo: '1620712943543-bcc4688e7485', result: '5 min read',
     title: 'How Generative AI Is Transforming Business Operations' },
 ];
 
