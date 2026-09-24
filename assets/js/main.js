@@ -173,20 +173,16 @@
     }, 2600);
   });
 
-  /* ---------- Hero slider (autoplay, tabs, arrows, swipe, keyboard) ---------- */
+  /* ---------- Hero slider (autoplay, arrows, swipe, keyboard) ---------- */
   $$('[data-slider]').forEach(root => {
-    const slides = $$('.hs-slide', root), tabs = $$('.hs-tab', root);
+    const slides = $$('.hs-slide', root);
     const DUR = 6500; let i = 0, timer, paused = false;
-    root.style.setProperty('--dur', DUR + 'ms');
     const go = n => {
       i = (n + slides.length) % slides.length;
       slides.forEach((s, k) => { s.classList.toggle('on', k === i); s.setAttribute('aria-hidden', String(k !== i)); s.querySelectorAll('a,button').forEach(a => a.tabIndex = k === i ? 0 : -1); });
-      tabs.forEach((t, k) => { t.classList.toggle('on', k === i); t.setAttribute('aria-selected', String(k === i)); });
-      const count = $('.hs-count b', root); if (count) count.textContent = String(i + 1).padStart(2, '0');
       schedule();
     };
     const schedule = () => { clearTimeout(timer); if (!reduce && !paused) timer = setTimeout(() => go(i + 1), DUR); };
-    tabs.forEach((t, k) => t.addEventListener('click', () => go(k)));
     $$('.hs-arrow', root).forEach(b => b.addEventListener('click', () => go(i + +b.dataset.dir)));
     root.addEventListener('keydown', e => { if (e.key === 'ArrowRight') go(i + 1); if (e.key === 'ArrowLeft') go(i - 1); });
     let x0 = null;

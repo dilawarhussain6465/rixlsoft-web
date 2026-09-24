@@ -16,14 +16,8 @@ const svcHref = (root, slug) => `${root}services/${slug}.html`;
 export { svcHref };
 
 function megaServices(root, home) {
-  const feature = (slug, tag, text) => { const s = SERVICES.find(x => x.slug === slug); return html`
-          <a class="ms-feature" href="${svcHref(root, slug)}">
-            <img src="${img(s.photo, 500)}" alt="" loading="lazy">
-            <span class="tag">${icon(s.icon)} ${tag}</span>
-            <h5>${esc(s.name)}</h5>
-            <p>${text}</p>
-            <span class="more">Learn more ${icon('arrow-right')}</span>
-          </a>`; };
+  const feature = (slug, tag) => { const s = SERVICES.find(x => x.slug === slug); return html`
+          <a class="ms-pick" href="${svcHref(root, slug)}"><span class="d-icon">${icon(s.icon)}</span><span><small>${tag}</small>${esc(s.name)}</span>${icon('arrow-right', 'go')}</a>`; };
   return html`
     <div class="mega-drop">
       <div class="ms">
@@ -35,12 +29,12 @@ function megaServices(root, home) {
             <a class="drop-link" href="${svcHref(root, s.slug)}" title="${esc(s.short)}"><span class="d-icon">${icon(s.icon)}</span><span class="d-text">${esc(s.name)}</span></a>`)}
           </div>`)}
         </div>
-        <div class="ms-side">
-          ${feature('digital-transformation', 'Featured', 'Modernize legacy systems and processes with a phased, ROI-led roadmap.')}
-          ${feature('staff-augmentation', 'Hire talent', 'Senior engineers who join your team in days, not months.')}
-        </div>
         <div class="ms-foot">
-          <a href="${root}services/index.html">${icon('layout-grid')} Explore our services</a>
+          <div class="ms-picks">
+            ${feature('digital-transformation', 'Featured')}
+            ${feature('staff-augmentation', 'Hire talent')}
+            ${feature('salesforce-consulting', 'CRM experts')}
+          </div>
           <a href="${home}#contact" class="btn btn-blue btn-sm">Get a Free Consultation ${icon('arrow-right')}</a>
         </div>
       </div>
@@ -155,7 +149,7 @@ function footer(root, home) {
           <a href="mailto:hello@rixlsoft.com" class="f-social" aria-label="Email RixlSoft" title="Email">${icon('mail')}</a>
         </div>
       </div>
-      ${CATEGORIES.map(c => html`<div class="f-col"><h5>${esc({ digital: 'Engineering', ai: 'AI &amp; Emerging', cloud: 'Cloud &amp; DevOps', specialized: 'Specialized' }[c.key])}</h5><ul class="f-links">${svcLinks(SERVICES.filter(s => s.cat === c.key))}</ul></div>`)}
+      ${CATEGORIES.map(c => html`<div class="f-col"><h5>${esc({ digital: 'Engineering', ai: 'AI &amp; Emerging', cloud: 'Cloud &amp; DevOps', crm: 'Salesforce &amp; CRM', specialized: 'Specialized' }[c.key])}</h5><ul class="f-links">${svcLinks(SERVICES.filter(s => s.cat === c.key))}</ul></div>`)}
       <div class="f-col"><h5>Company</h5>
         <ul class="f-links">
           <li><a href="${home}#about">About RixlSoft</a></li>
