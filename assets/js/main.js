@@ -64,15 +64,6 @@
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') { closeAll(); closeMobile(); }
   });
-  /* Services mega menu: hovering a category swaps the panel */
-  $$('[data-ms]').forEach(ms => {
-    const cats = $$('.ms-cat', ms), panels = $$('.ms-panel', ms);
-    const show = key => {
-      cats.forEach(c => c.classList.toggle('on', c.dataset.cat === key));
-      panels.forEach(p => p.classList.toggle('on', p.dataset.panel === key));
-    };
-    cats.forEach(c => { c.addEventListener('pointerenter', () => show(c.dataset.cat)); c.addEventListener('focus', () => show(c.dataset.cat)); c.addEventListener('click', e => { e.stopPropagation(); show(c.dataset.cat); }); });
-  });
 
   /* ---------- Mobile menu ---------- */
   const ham = $('#navHam'), mob = $('#mobOverlay');

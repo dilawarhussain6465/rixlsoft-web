@@ -29,14 +29,14 @@ const SHOWCASE = [
     text: 'Copilots, knowledge assistants and AI agents that automate real work, grounded in your data.' },
   { area: 'x', slug: 'ar-vr-xr', title: 'AR / VR / XR', tag: 'Meta Quest · WebXR', photo: '1535223289827-42f1e9919769',
     text: 'Immersive training, showrooms and experiences.' },
-  { area: 'b', slug: 'blockchain-web3', title: 'Blockchain & Web3', tag: 'DeFi · NFTs', photo: '1639762681485-074b7f938ba0',
-    text: 'Audited smart contracts and dApps.' },
+  { area: 'b', slug: 'digital-transformation', title: 'Digital Transformation', tag: 'Modernize · Automate', photo: '1552664730-d307ca884978',
+    text: 'Modernize legacy systems and processes, phase by phase.' },
   { area: 'w', slug: 'web-development', title: 'Web & App Development', tag: 'React · Next.js · Flutter', photo: '1460925895917-afdab827c52f',
     text: 'Fast, secure web platforms and mobile apps built to convert and to scale.' },
   { area: 'c', slug: 'cloud-applications', title: 'Cloud & DevOps', tag: 'AWS · GCP · Azure', photo: '1558494949-ef010cbdcc31',
     text: 'Cloud-native builds and automated delivery.' },
-  { area: 'd', slug: 'data-analytics', title: 'Data Analytics', tag: 'BI · Pipelines', photo: '1551288049-bebda4e38f71',
-    text: 'Dashboards and pipelines that drive decisions.' },
+  { area: 'd', slug: 'staff-augmentation', title: 'Staff Augmentation', tag: 'Hire engineers', photo: '1522071820081-009f0129c71c',
+    text: 'Senior engineers who join your team in days.' },
 ];
 
 const PROCESS = [
@@ -114,9 +114,9 @@ export function home() {
       <div class="sec-head left">
         <div class="sec-badge">What We Do</div>
         <h2>Engineering the Technologies <em>That Matter Most</em></h2>
-        <p>Twenty-one specialist services across four practices — here are the ones our clients ask for most.</p>
+        <p>Specialist services across four practices — from AI and games to cloud, transformation and dedicated teams.</p>
       </div>
-      <a href="services/index.html" class="btn btn-outline-blue" data-reveal="left">All 21 Services ${icon('arrow-right')}</a>
+      <a href="services/index.html" class="btn btn-outline-blue" data-reveal="left">View All Services ${icon('arrow-right')}</a>
     </div>
     <div class="bento" data-stagger=".07" data-reveal-type="zoom">
       ${SHOWCASE.map(t => { const m = SERVICES.find(s => s.slug === t.slug); return html`

@@ -12,7 +12,7 @@ export function hubPage(details) {
     <div class="page-hero-grid">
       <div>
         <nav class="crumbs" aria-label="Breadcrumb" data-reveal="down"><a href="../">Home</a>${icon('chevron-right')}<span aria-current="page">Services</span></nav>
-        <div class="hero-badge" data-reveal="down" style="--d:.1s"><span class="dot"></span>21 services · 4 practices</div>
+        <div class="hero-badge" data-reveal="down" style="--d:.1s"><span class="dot"></span>Our Services</div>
         <h1 data-split>Everything You Need to <em>Build, Scale &amp; Grow</em></h1>
         <p class="lead" data-reveal="up" style="--d:.45s">From AI products and immersive games to cloud infrastructure and dedicated teams — one accountable partner across the full software lifecycle.</p>
         <div class="hero-actions" data-reveal="up" style="--d:.6s">

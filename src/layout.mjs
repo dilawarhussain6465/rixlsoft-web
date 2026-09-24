@@ -16,32 +16,33 @@ const svcHref = (root, slug) => `${root}services/${slug}.html`;
 export { svcHref };
 
 function megaServices(root, home) {
+  const feature = (slug, tag, text) => { const s = SERVICES.find(x => x.slug === slug); return html`
+          <a class="ms-feature" href="${svcHref(root, slug)}">
+            <img src="${img(s.photo, 500)}" alt="" loading="lazy">
+            <span class="tag">${icon(s.icon)} ${tag}</span>
+            <h5>${esc(s.name)}</h5>
+            <p>${text}</p>
+            <span class="more">Learn more ${icon('arrow-right')}</span>
+          </a>`; };
   return html`
     <div class="mega-drop">
-      <div class="ms" data-ms>
-        <div class="ms-rail">
-          <div class="ms-rail-label">Our Services</div>
-          ${CATEGORIES.map((c, i) => html`
-          <button class="ms-cat${i === 0 ? ' on' : ''}" data-cat="${c.key}"><span class="d-icon">${icon(c.icon)}</span><span>${esc(c.name)}<small>${SERVICES.filter(s => s.cat === c.key).length} services</small></span>${icon('chevron-right', 'chev')}</button>`)}
-          <a class="ms-all" href="${root}services/index.html">${icon('layout-grid')} View all 21 services</a>
-        </div>
-        <div>
-          ${CATEGORIES.map((c, i) => html`
-          <div class="ms-panel${i === 0 ? ' on' : ''}" data-panel="${c.key}">
-            <h4>${esc(c.name)}</h4>
-            <p>${esc(c.blurb)}</p>
-            <div class="ms-links">
-              ${SERVICES.filter(s => s.cat === c.key).map(s => html`
-              <a class="drop-link" href="${svcHref(root, s.slug)}"><span class="d-icon">${icon(s.icon)}</span><span class="d-text">${esc(s.name)}<small>${esc(s.short)}</small></span></a>`)}
-            </div>
+      <div class="ms">
+        <div class="ms-cols">
+          ${CATEGORIES.map(c => html`
+          <div class="ms-col">
+            <div class="ms-col-head">${icon(c.icon)} ${esc(c.name.replace(' Services', ''))}</div>
+            ${SERVICES.filter(s => s.cat === c.key).map(s => html`
+            <a class="drop-link" href="${svcHref(root, s.slug)}" title="${esc(s.short)}"><span class="d-icon">${icon(s.icon)}</span><span class="d-text">${esc(s.name)}</span></a>`)}
           </div>`)}
         </div>
-        <a class="ms-feature" href="${home}#contact">
-          <img src="${img(PHOTOS.services, 600)}" alt="" loading="lazy">
-          <span class="tag">Free consultation</span>
-          <h5>Not sure where to start? Talk to a solution architect.</h5>
-          <span class="more">Book a discovery call ${icon('arrow-right')}</span>
-        </a>
+        <div class="ms-side">
+          ${feature('digital-transformation', 'Featured', 'Modernize legacy systems and processes with a phased, ROI-led roadmap.')}
+          ${feature('staff-augmentation', 'Hire talent', 'Senior engineers who join your team in days, not months.')}
+        </div>
+        <div class="ms-foot">
+          <a href="${root}services/index.html">${icon('layout-grid')} Explore our services</a>
+          <a href="${home}#contact" class="btn btn-blue btn-sm">Get a Free Consultation ${icon('arrow-right')}</a>
+        </div>
       </div>
     </div>`;
 }
@@ -154,24 +155,16 @@ function footer(root, home) {
           <a href="mailto:hello@rixlsoft.com" class="f-social" aria-label="Email RixlSoft" title="Email">${icon('mail')}</a>
         </div>
       </div>
-      <div class="f-col"><h5>Engineering &amp; AI</h5><ul class="f-links">${svcLinks(SERVICES.filter(s => s.cat === 'digital' || s.cat === 'ai'))}</ul></div>
-      <div class="f-col"><h5>Cloud &amp; More</h5><ul class="f-links">${svcLinks(SERVICES.filter(s => s.cat === 'cloud' || s.cat === 'specialized'))}</ul></div>
+      ${CATEGORIES.map(c => html`<div class="f-col"><h5>${esc({ digital: 'Engineering', ai: 'AI &amp; Emerging', cloud: 'Cloud &amp; DevOps', specialized: 'Specialized' }[c.key])}</h5><ul class="f-links">${svcLinks(SERVICES.filter(s => s.cat === c.key))}</ul></div>`)}
       <div class="f-col"><h5>Company</h5>
         <ul class="f-links">
           <li><a href="${home}#about">About RixlSoft</a></li>
+          <li><a href="${root}services/index.html">Our Services</a></li>
           <li><a href="${home}#industries">Industries</a></li>
           <li><a href="${home}#process">Our Process</a></li>
-          <li><a href="${home}#technology">Technology</a></li>
-          <li><a href="${home}#contact">Careers</a></li>
-        </ul>
-      </div>
-      <div class="f-col"><h5>Resources</h5>
-        <ul class="f-links">
-          <li><a href="${root}services/index.html">All Services</a></li>
           <li><a href="${home}#insights">Case Studies</a></li>
-          <li><a href="${home}#insights">Blog &amp; Articles</a></li>
+          <li><a href="${home}#contact">Careers</a></li>
           <li><a href="${home}#contact">Contact Us</a></li>
-          <li><a href="mailto:hello@rixlsoft.com">hello@rixlsoft.com</a></li>
         </ul>
       </div>
     </div>
