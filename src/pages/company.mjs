@@ -1,5 +1,6 @@
 import { esc, icon, logo, html } from '../lib.mjs';
-import { PHOTOS, PLATFORMS, RECOGNITION, CAREERS_EMAIL, img } from '../data/site.mjs';
+import { PHOTOS, PLATFORMS, RECOGNITION, FORM_INBOX, img } from '../data/site.mjs';
+import { SITE_URL } from '../layout.mjs';
 import { PROCESS } from './home.mjs';
 
 /** Devsinc-style "Why RixlSoft" card: platforms we build on + recognition. */
@@ -210,17 +211,22 @@ ${hero('Careers', 'Careers at RixlSoft', 'Build What Comes Next <em>With Us</em>
       <div class="cta-left">
         <div class="sec-badge" data-reveal="up">General Application</div>
         <h2 data-split>Tell Us About <em>Yourself</em></h2>
-        <p data-reveal="up">Share your experience and the kind of work you want to do. Submitting opens your email app with your details filled in — attach your CV before sending.</p>
+        <p data-reveal="up">Share your experience, attach your CV and tell us the kind of work you want to do. Your application goes straight to our hiring team.</p>
         <div class="cta-info-list" data-stagger=".08" data-reveal-type="left">
-          <div class="cta-info"><span class="ci-icon">${icon('mail')}</span><a href="mailto:${CAREERS_EMAIL}?subject=Career%20application">${CAREERS_EMAIL}</a></div>
+          <div class="cta-info"><span class="ci-icon">${icon('file-text')}</span><span>Attach your CV — PDF or Word, up to 5 MB</span></div>
           <div class="cta-info"><span class="ci-icon">${icon('earth')}</span><span>Remote-first · Hiring globally</span></div>
           <div class="cta-info"><span class="ci-icon">${icon('clock')}</span><span>We reply to every applicant</span></div>
         </div>
       </div>
-      <form class="cta-form" novalidate data-mailto="${CAREERS_EMAIL}" data-subject="Career application" data-reveal="right">
+      <form class="cta-form" method="POST" enctype="multipart/form-data" novalidate data-inbox="${FORM_INBOX}" data-reveal="right">
+        <input type="hidden" name="_subject" value="New job application — RixlSoft careers">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="${SITE_URL}thanks.html?type=careers">
+        <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="form-row">
           <div class="form-group"><label for="a-name">Full Name *</label><input id="a-name" name="Name" class="form-control" required autocomplete="name" placeholder="Your full name"></div>
-          <div class="form-group"><label for="a-email">Email *</label><input id="a-email" name="Email" type="email" class="form-control" required autocomplete="email" placeholder="you@email.com"></div>
+          <div class="form-group"><label for="a-email">Email *</label><input id="a-email" name="email" type="email" class="form-control" required autocomplete="email" placeholder="you@email.com"></div>
         </div>
         <div class="form-row">
           <div class="form-group"><label for="a-role">Area of Interest *</label><select id="a-role" name="Role" class="form-control" required><option value="">Select an area</option>${roles.map(r => html`<option>${r}</option>`)}</select></div>
@@ -232,11 +238,44 @@ ${hero('Careers', 'Careers at RixlSoft', 'Build What Comes Next <em>With Us</em>
         <div class="form-row">
           <div class="form-group full"><label for="a-msg">About You *</label><textarea id="a-msg" name="Message" class="form-control" required placeholder="Your background, strongest skills and what you want to work on next..."></textarea></div>
         </div>
+        <div class="form-row">
+          <div class="form-group full"><label for="a-cv">CV / Resume * <span class="opt">(PDF, DOC or DOCX · max 5 MB)</span></label>
+            <label class="file-drop"><input id="a-cv" type="file" name="attachment" accept=".pdf,.doc,.docx" required><span class="fd-ico">${icon('upload')}</span><span class="fd-text">Choose your CV or drag it here</span></label>
+          </div>
+        </div>
         <button type="submit" class="btn btn-blue form-submit">Send Application ${icon('send')}</button>
-        <p class="form-note">Remember to attach your CV in the email that opens.</p>
+        <p class="form-note">We review every application and reply to every candidate.</p>
       </form>
     </div>
   </div>
 </section>`;
   return { title: 'Careers | RixlSoft', description: 'Careers at RixlSoft: join a remote-first, AI-first engineering team. No current openings — submit a general application.', image: img(PHOTOS.about, 1200), body };
+}
+
+/* ---------------- Thank-you page (after FormSubmit) ---------------- */
+export function thanksPage() {
+  const body = html`
+<section class="page-hero" style="min-height:calc(100vh - 40px);display:flex;align-items:center">
+  <canvas class="hero-canvas" aria-hidden="true"></canvas>
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div class="grid-bg"></div>
+  <div class="container">
+    <div class="thanks-card" data-thanks>
+      <span class="er-ico" data-reveal="zoom">${icon('check')}</span>
+      <div data-for="contact">
+        <h1 data-split>Thank You — <em>Message Received</em></h1>
+        <p class="lead" style="margin:0 auto" data-reveal="up">Your enquiry is on its way to our team. A RixlSoft specialist will reply within 24 hours to schedule your free discovery call.</p>
+      </div>
+      <div data-for="careers" hidden>
+        <h1 data-split>Thank You — <em>Application Received</em></h1>
+        <p class="lead" style="margin:0 auto" data-reveal="up">Your application and CV have been sent to our hiring team. We review every application and will get back to you as soon as a matching role opens.</p>
+      </div>
+      <div class="hero-actions" data-reveal="up">
+        <a href="./" class="btn btn-blue">Back to Home ${icon('arrow-right')}</a>
+        <a href="case-studies/index.html" class="btn btn-outline-dark">Read Case Studies</a>
+      </div>
+    </div>
+  </div>
+</section>`;
+  return { title: 'Thank You | RixlSoft', description: 'Thank you for contacting RixlSoft.', body };
 }

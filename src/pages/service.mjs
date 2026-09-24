@@ -235,7 +235,7 @@ export function servicePage(meta, s) {
 
   const jsonld = [
     { '@context': 'https://schema.org', '@type': 'Service', name: meta.name, serviceType: meta.name, description: s.hero.lead,
-      provider: { '@type': 'Organization', name: 'RixlSoft', url: SITE_URL, email: 'hello@rixlsoft.com' }, areaServed: 'Worldwide',
+      provider: { '@type': 'Organization', name: 'RixlSoft', url: SITE_URL }, areaServed: 'Worldwide',
       url: `${SITE_URL}services/${meta.slug}.html` },
     { '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: s.faqs.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) },
     { '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: [

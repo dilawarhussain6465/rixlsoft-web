@@ -5,7 +5,8 @@ import { whySection } from './company.mjs';
 import { csCard, blogCard } from './articles.mjs';
 import CASE_STUDIES from '../data/case-studies.mjs';
 import BLOG from '../data/blog.mjs';
-import { ARTICLE_PHOTOS, CONTACT_EMAIL } from '../data/site.mjs';
+import { ARTICLE_PHOTOS, FORM_INBOX } from '../data/site.mjs';
+import { SITE_URL } from '../layout.mjs';
 
 const R = ''; // root prefix for the home page
 
@@ -263,16 +264,21 @@ export function contactSection() {
         <h2 data-split>Let's Build Something <em>Extraordinary</em></h2>
         <p data-reveal="up">Tell us about your project — whether it's an AI system, a game, an AR experience, or a complete platform. We'll schedule a free discovery call and show you exactly what's possible.</p>
         <div class="cta-info-list" data-stagger=".08" data-reveal-type="left">
-          <div class="cta-info"><span class="ci-icon">${icon('mail')}</span><a href="mailto:hello@rixlsoft.com">hello@rixlsoft.com</a></div>
+          <div class="cta-info"><span class="ci-icon">${icon('send')}</span><span>Send the form — it comes straight to our team</span></div>
           <div class="cta-info"><span class="ci-icon">${icon('earth')}</span><span>Remote-first · Global availability</span></div>
           <div class="cta-info"><span class="ci-icon">${icon('clock')}</span><span>Response within 24 hours</span></div>
           <div class="cta-info"><span class="ci-icon">${icon('messages-square')}</span><span>Free initial consultation</span></div>
         </div>
       </div>
-      <form class="cta-form" id="contactForm" novalidate data-mailto="${CONTACT_EMAIL}" data-subject="Project enquiry" data-reveal="right">
+      <form class="cta-form" id="contactForm" method="POST" enctype="multipart/form-data" novalidate data-inbox="${FORM_INBOX}" data-reveal="right">
+        <input type="hidden" name="_subject" value="New project enquiry — RixlSoft website">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="${SITE_URL}thanks.html?type=contact">
+        <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="form-row">
           <div class="form-group"><label for="f-name">Full Name *</label><input id="f-name" name="Name" type="text" class="form-control" placeholder="Your full name" required autocomplete="name"></div>
-          <div class="form-group"><label for="f-email">Email *</label><input id="f-email" name="Email" type="email" class="form-control" placeholder="work@company.com" required autocomplete="email"></div>
+          <div class="form-group"><label for="f-email">Email *</label><input id="f-email" name="email" type="email" class="form-control" placeholder="work@company.com" required autocomplete="email"></div>
         </div>
         <div class="form-row">
           <div class="form-group"><label for="f-phone">Phone Number</label><input id="f-phone" name="Phone" type="tel" class="form-control" placeholder="+1 234 567 8900" autocomplete="tel"></div>
@@ -299,6 +305,11 @@ export function contactSection() {
         </div>
         <div class="form-row">
           <div class="form-group full"><label for="f-details">Project Details *</label><textarea id="f-details" name="Details" class="form-control" placeholder="Tell us about your project goals, timeline, and any specific requirements..." required></textarea></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group full"><label for="f-file">Attach a brief or RFP <span class="opt">(optional · PDF, DOC, PPT · max 5 MB)</span></label>
+            <label class="file-drop"><input id="f-file" type="file" name="attachment" accept=".pdf,.doc,.docx,.ppt,.pptx,.txt"><span class="fd-ico">${icon('paperclip')}</span><span class="fd-text">Choose a file or drag it here</span></label>
+          </div>
         </div>
         <button type="submit" class="btn btn-blue form-submit">Send Message ${icon('send')}</button>
         <p class="form-note">We'll reply within 24 hours. Your details are never shared.</p>

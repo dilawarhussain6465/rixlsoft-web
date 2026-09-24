@@ -33,3 +33,11 @@ To use a new icon, drop a [Lucide](https://lucide.dev) SVG into `src/icons/<name
 - Icons: [Lucide](https://lucide.dev) (ISC)
 - Logos: [Devicon](https://devicon.dev) (MIT) and [Simple Icons](https://simpleicons.org) (CC0). All logos are trademarks of their respective owners.
 - Photos: [Unsplash](https://unsplash.com/license), loaded from `images.unsplash.com`.
+
+## Forms (contact + careers)
+
+GitHub Pages can't run server code, so both forms post to [FormSubmit](https://formsubmit.co), which emails every submission — including uploaded files (brief / CV, max 5 MB) — to the inbox set in `FORM_INBOX` (`src/data/site.mjs`, base64-encoded so it isn't displayed on the site).
+
+- **First-time activation:** the very first submission triggers an "Activate Form" email from FormSubmit to that inbox. Click the link once; after that every submission arrives as an email with a table of the fields and the file attached.
+- **Hide the address completely (optional):** the activation email also contains a random alias string. Put that string in `FORM_INBOX` instead of the base64 email (and change `atob(form.dataset.inbox)` in `assets/js/main.js` to use it directly), then rebuild.
+- Spam protection: hidden honeypot field `_honey`. After sending, visitors land on `thanks.html`.
