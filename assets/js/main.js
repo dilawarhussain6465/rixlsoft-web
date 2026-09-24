@@ -191,6 +191,7 @@
       i = (n + slides.length) % slides.length;
       slides.forEach((s, k) => { s.classList.toggle('on', k === i); s.setAttribute('aria-hidden', String(k !== i)); s.querySelectorAll('a,button').forEach(a => a.tabIndex = k === i ? 0 : -1); });
       tabs.forEach((t, k) => { t.classList.toggle('on', k === i); t.setAttribute('aria-selected', String(k === i)); });
+      const count = $('.hs-count b', root); if (count) count.textContent = String(i + 1).padStart(2, '0');
       schedule();
     };
     const schedule = () => { clearTimeout(timer); if (!reduce && !paused) timer = setTimeout(() => go(i + 1), DUR); };

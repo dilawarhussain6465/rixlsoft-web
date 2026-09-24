@@ -4,24 +4,22 @@ import { svcHref } from '../layout.mjs';
 
 const R = ''; // root prefix for the home page
 
-const MARQUEE = ['react', 'nextjs', 'openai', 'claude', 'unity', 'unrealengine', 'flutter', 'swift', 'aws', 'googlecloud', 'azure', 'kubernetes', 'docker', 'python', 'nodejs', 'figma', 'oculus', 'shopify', 'stripe', 'ethereum'];
-
 // Full-screen hero slides. The first one carries the page <h1>.
 const SLIDES = [
-  { tag: 'AI-First Product Engineering', title: 'Build Intelligent <em>Systems</em> That Scale Globally', photo: PHOTOS.hero, logos: ['openai', 'unity', 'aws', 'flutter'],
+  { tag: 'Built for the AI era', title: 'AI-native engineering. <em>Products that scale</em>, shipped fast.', photo: PHOTOS.hero,
     text: 'RixlSoft designs, builds and deploys AI-powered software, immersive games and scalable platforms — for startups, enterprises and everything in between.' },
-  { tag: 'Generative AI & Machine Learning', title: 'AI That Works <em>in Production</em>, Not Just in Demos', photo: '1677442136019-21780ecad995', link: 'generative-ai', logos: ['openai', 'claude', 'gemini', 'langchain'],
+  { tag: 'Generative AI & Machine Learning', title: 'Generative AI that works <em>in production</em>, not just demos.', photo: '1677442136019-21780ecad995', link: 'generative-ai',
     text: 'LLM copilots, RAG knowledge assistants and autonomous agents grounded in your own data — with evaluation, guardrails and cost control built in.' },
-  { tag: 'Game Development', title: "Games Players <em>Can't Put Down</em>", photo: '1542751371-adc38448a05e', link: 'game-development', logos: ['unity', 'unrealengine', 'blender', 'godot'],
+  { tag: 'Game Development', title: "Games players <em>can't put down</em>, on every platform.", photo: '1542751371-adc38448a05e', link: 'game-development',
     text: 'Full-cycle mobile, PC and console game development in Unity and Unreal — from concept art and prototypes to multiplayer and live-ops.' },
-  { tag: 'AR / VR / Mixed Reality', title: 'Immersive Worlds for <em>Training, Retail &amp; Play</em>', photo: '1593508512255-86ab42a8e620', link: 'ar-vr-xr', logos: ['oculus', 'unity', 'webgl', 'threejs'],
+  { tag: 'AR / VR / Mixed Reality', title: 'Immersive AR &amp; VR for <em>training, retail and play</em>.', photo: '1593508512255-86ab42a8e620', link: 'ar-vr-xr',
     text: 'Mixed-reality apps for Meta Quest, Apple Vision Pro and the browser — interactive training, product visualization and virtual showrooms.' },
-  { tag: 'Web & Mobile Apps', title: 'Web &amp; Mobile Apps <em>Users Love</em>', photo: '1512941937669-90a1b58e7e9c', link: 'app-development', logos: ['react', 'nextjs', 'flutter', 'swift'],
+  { tag: 'Web & Mobile Apps', title: 'Web &amp; mobile apps <em>users love</em>, built to scale.', photo: '1512941937669-90a1b58e7e9c', link: 'app-development',
     text: 'High-performance web platforms and native-quality iOS and Android apps — designed for conversion and engineered to scale.' },
-  { tag: 'Cloud & DevOps', title: 'Cloud Platforms Built for <em>99.9% Uptime</em>', photo: '1451187580459-43490279c0fa', link: 'cloud-applications', logos: ['aws', 'googlecloud', 'azure', 'kubernetes'],
+  { tag: 'Cloud & DevOps', title: 'Cloud platforms engineered for <em>99.9% uptime</em>.', photo: '1451187580459-43490279c0fa', link: 'cloud-applications',
     text: 'Cloud-native builds, zero-downtime migrations and automated CI/CD pipelines across AWS, Google Cloud and Azure.' },
 ];
-const SLIDE_LABELS = ['RixlSoft', 'AI & ML', 'Game Dev', 'AR / VR', 'Web & Mobile', 'Cloud'];
+const POWERED = ['openai', 'claude', 'aws', 'googlecloud', 'unity', 'flutter'];
 
 // Image showcase (bento grid). `area` maps to grid-template-areas in CSS.
 const SHOWCASE = [
@@ -71,11 +69,6 @@ const AWARDS = [
   { logo: 'meta', t: 'Meta Spark Partner', s: 'AR Development' },
 ];
 
-const marqueeRow = (keys, cls = '', dur = 45) => {
-  const items = keys.map(k => html`<span class="mq-item">${logo(k, R, 26)}${esc(logoName(k))}</span>`).join('');
-  return html`<div class="marquee ${cls}" style="--mq-dur:${dur}s"><div class="marquee-track">${items}</div><div class="marquee-track" aria-hidden="true">${items}</div></div>`;
-};
-
 export function home() {
   const featured = new Set(SHOWCASE.map(s => s.slug));
   const body = html`
@@ -85,41 +78,42 @@ export function home() {
   <div class="hs-slide${i === 0 ? ' on' : ''}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${SLIDES.length}"${i ? ' aria-hidden="true"' : ''}>
     <img class="hs-bg" src="${img(s.photo, 1920)}" alt=""${i === 0 ? ' fetchpriority="high"' : ' loading="lazy"'}>
     <div class="container hs-content">
-      <div class="hero-badge anim" style="--k:0"><span class="dot"></span>${esc(s.tag)}</div>
+      <div class="hs-eyebrow anim" style="--k:0">${esc(s.tag)}</div>
       ${i === 0 ? html`<h1 class="hs-title anim" style="--k:1">${rich(s.title)}</h1>` : html`<h2 class="hs-title anim" style="--k:1">${rich(s.title)}</h2>`}
       <p class="hs-text anim" style="--k:2">${esc(s.text)}</p>
       <div class="hero-actions anim" style="--k:3">
         ${s.link
-          ? html`<a href="${svcHref(R, s.link)}" class="btn btn-blue">Explore ${esc(s.tag.split(' &')[0].split(' /')[0])} ${icon('arrow-right')}</a><a href="#contact" class="btn btn-outline-dark">Talk to an Expert</a>`
-          : html`<a href="#contact" class="btn btn-blue">Start Your Project ${icon('arrow-right')}</a><a href="services/index.html" class="btn btn-outline-dark">Explore Services</a>`}
+          ? html`<a href="${svcHref(R, s.link)}" class="btn btn-blue">Explore ${esc(SERVICES.find(x => x.slug === s.link).name)} ${icon('arrow-right')}</a><a href="#contact" class="btn btn-outline-dark">Talk to an Expert</a>`
+          : html`<a href="#contact" class="btn btn-blue">Talk to an Expert ${icon('arrow-right')}</a><a href="services/index.html" class="btn btn-outline-dark">Explore Services</a>`}
       </div>
-      <div class="hs-logos anim" style="--k:4"><span>Built with</span>${s.logos.map(k => html`<span class="hs-logo" title="${esc(logoName(k))}">${logo(k, R, 20)}</span>`)}</div>
     </div>
   </div>`)}
   <canvas class="hero-canvas" aria-hidden="true"></canvas>
-  <div class="hs-arrows container">
-    <button class="hs-arrow" data-dir="-1" aria-label="Previous slide">${icon('arrow-left')}</button>
-    <button class="hs-arrow" data-dir="1" aria-label="Next slide">${icon('arrow-right')}</button>
-  </div>
-  <div class="hs-nav">
-    <div class="container hs-tabs" role="tablist" aria-label="Choose slide">
-      ${SLIDE_LABELS.map((l, i) => html`<button class="hs-tab${i === 0 ? ' on' : ''}" role="tab" aria-selected="${i === 0}"><span class="bar"><i></i></span><span class="n">0${i + 1}</span><span class="l">${esc(l)}</span></button>`)}
+  <div class="hs-bottom">
+    <div class="container">
+      <div>
+        <div class="hs-label">Powered by</div>
+        <div class="hs-logos">${POWERED.map(k => html`<span>${logo(k, R, 22)}${esc(logoName(k))}</span>`)}</div>
+      </div>
+      <div class="hs-ctrl">
+        <div class="hs-dots" role="tablist" aria-label="Choose slide">
+          ${SLIDES.map((s, i) => html`<button class="hs-tab${i === 0 ? ' on' : ''}" role="tab" aria-selected="${i === 0}" aria-label="Slide ${i + 1}: ${esc(s.tag)}"><span class="bar"><i></i></span></button>`)}
+        </div>
+        <div class="hs-count"><b>01</b> / 0${SLIDES.length}</div>
+        <button class="hs-arrow" data-dir="-1" aria-label="Previous slide">${icon('arrow-left')}</button>
+        <button class="hs-arrow" data-dir="1" aria-label="Next slide">${icon('arrow-right')}</button>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ================= LOGO MARQUEE ================= -->
-<section class="marquee-sec" aria-label="Technologies we work with">
-  ${marqueeRow(MARQUEE, '', 60)}
-</section>
-
 <!-- ================= SHOWCASE ================= -->
-<section class="sec" id="services">
+<section class="sec peek" id="services">
   <div class="container">
     <div class="sec-head-row">
-      <div class="sec-head left" data-reveal="up">
+      <div class="sec-head left">
         <div class="sec-badge">What We Do</div>
-        <h2 data-split>Engineering the Technologies <em>That Matter Most</em></h2>
+        <h2>Engineering the Technologies <em>That Matter Most</em></h2>
         <p>Twenty-one specialist services across four practices — here are the ones our clients ask for most.</p>
       </div>
       <a href="services/index.html" class="btn btn-outline-blue" data-reveal="left">All 21 Services ${icon('arrow-right')}</a>
