@@ -62,3 +62,13 @@ export const INDUSTRIES = {
   enterprise:    { name: 'Enterprises', desc: 'Modernization at scale', icon: 'building', photo: '1486406146926-c627a92ad1ab' },
 };
 export const HOME_INDUSTRIES = ['gaming', 'fintech', 'healthcare', 'retail', 'edtech', 'travel', 'real-estate', 'logistics', 'energy', 'telecom'];
+
+// Technology groups (home page tech tabs + "Technologies" mega menu). Keys = src/data/logos.mjs
+export const TECH_STACK = [
+  { group: 'Frontend', items: ['react', 'nextjs', 'vuejs', 'angular', 'typescript', 'tailwindcss', 'threejs'] },
+  { group: 'Backend', items: ['nodejs', 'python', 'fastapi', 'django', 'nestjs', 'graphql', 'go'] },
+  { group: 'AI & ML', items: ['openai', 'claude', 'gemini', 'langchain', 'huggingface', 'pytorch', 'tensorflow'] },
+  { group: 'Game & XR', items: ['unity', 'unrealengine', 'blender', 'oculus', 'webgl', 'godot', 'babylonjs'] },
+  { group: 'Cloud & DevOps', items: ['aws', 'googlecloud', 'azure', 'docker', 'kubernetes', 'terraform', 'githubactions'] },
+  { group: 'Mobile & Data', items: ['flutter', 'reactnative', 'swift', 'kotlin', 'postgresql', 'mongodb', 'redis', 'supabase', 'firebase'] },
+];

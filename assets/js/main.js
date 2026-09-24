@@ -29,27 +29,49 @@
       progress.style.setProperty('--p', h > 0 ? (y / h).toFixed(4) : 0);
     }
     if (toTop) toTop.classList.toggle('show', y > 900);
-    updateTimeline();
     updateParallax();
     lastY = y; ticking = false;
   };
   addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(onScroll); ticking = true; } }, { passive: true });
   toTop?.addEventListener('click', () => scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
 
-  /* ---------- Desktop dropdowns (hover via CSS; click/keyboard here) ---------- */
-  $$('.nav-item > .nav-link').forEach(btn => {
-    btn.addEventListener('click', e => {
-      e.stopPropagation();
-      const item = btn.parentElement;
-      const open = !item.classList.contains('active');
-      $$('.nav-item').forEach(i => { i.classList.remove('active'); i.querySelector('.nav-link')?.setAttribute('aria-expanded', 'false'); });
-      item.classList.toggle('active', open);
-      btn.setAttribute('aria-expanded', String(open));
+  /* ---------- Desktop dropdowns: open on hover (with intent delay), click for touch ---------- */
+  document.documentElement.classList.remove('no-js');
+  const items = $$('.nav-item');
+  const setOpen = (item, open) => {
+    item.classList.toggle('active', open);
+    item.querySelector('.nav-link')?.setAttribute('aria-expanded', String(open));
+  };
+  const closeAll = except => items.forEach(i => { if (i !== except) setOpen(i, false); });
+  items.forEach(item => {
+    let t;
+    item.addEventListener('pointerenter', e => {
+      if (e.pointerType === 'touch') return;
+      clearTimeout(t); t = setTimeout(() => { closeAll(item); setOpen(item, true); }, 60);
     });
+    item.addEventListener('pointerleave', e => {
+      if (e.pointerType === 'touch') return;
+      clearTimeout(t); t = setTimeout(() => setOpen(item, false), 180);
+    });
+    item.querySelector('.nav-link')?.addEventListener('click', e => {
+      e.stopPropagation();
+      const open = !item.classList.contains('active');
+      closeAll(item); setOpen(item, open);
+    });
+    item.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setOpen(item, false)));
   });
-  document.addEventListener('click', e => { if (!e.target.closest('.nav-item')) $$('.nav-item').forEach(i => i.classList.remove('active')); });
+  document.addEventListener('click', e => { if (!e.target.closest('.nav-item')) closeAll(); });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { $$('.nav-item').forEach(i => i.classList.remove('active')); closeMobile(); }
+    if (e.key === 'Escape') { closeAll(); closeMobile(); }
+  });
+  /* Services mega menu: hovering a category swaps the panel */
+  $$('[data-ms]').forEach(ms => {
+    const cats = $$('.ms-cat', ms), panels = $$('.ms-panel', ms);
+    const show = key => {
+      cats.forEach(c => c.classList.toggle('on', c.dataset.cat === key));
+      panels.forEach(p => p.classList.toggle('on', p.dataset.panel === key));
+    };
+    cats.forEach(c => { c.addEventListener('pointerenter', () => show(c.dataset.cat)); c.addEventListener('focus', () => show(c.dataset.cat)); c.addEventListener('click', e => { e.stopPropagation(); show(c.dataset.cat); }); });
   });
 
   /* ---------- Mobile menu ---------- */
@@ -108,7 +130,7 @@
       c.style.setProperty('--d', `${(i * step).toFixed(2)}s`);
     });
   });
-  const revealTargets = $$('[data-reveal], [data-split], [data-count], .steps-h');
+  const revealTargets = $$('[data-reveal], [data-split], [data-count], .steps-h, .flow');
   if (reduce || !('IntersectionObserver' in window)) {
     revealTargets.forEach(el => { el.classList.add('in', 'split-in'); if (el.dataset.count) setCount(el, parseFloat(el.dataset.count)); });
   } else {
@@ -158,6 +180,31 @@
       nxt.classList.remove('off'); nxt.classList.add('on');
       setTimeout(() => cur.classList.remove('off'), 800);
     }, 2600);
+  });
+
+  /* ---------- Hero slider (autoplay, tabs, arrows, swipe, keyboard) ---------- */
+  $$('[data-slider]').forEach(root => {
+    const slides = $$('.hs-slide', root), tabs = $$('.hs-tab', root);
+    const DUR = 6500; let i = 0, timer, paused = false;
+    root.style.setProperty('--dur', DUR + 'ms');
+    const go = n => {
+      i = (n + slides.length) % slides.length;
+      slides.forEach((s, k) => { s.classList.toggle('on', k === i); s.setAttribute('aria-hidden', String(k !== i)); s.querySelectorAll('a,button').forEach(a => a.tabIndex = k === i ? 0 : -1); });
+      tabs.forEach((t, k) => { t.classList.toggle('on', k === i); t.setAttribute('aria-selected', String(k === i)); });
+      schedule();
+    };
+    const schedule = () => { clearTimeout(timer); if (!reduce && !paused) timer = setTimeout(() => go(i + 1), DUR); };
+    tabs.forEach((t, k) => t.addEventListener('click', () => go(k)));
+    $$('.hs-arrow', root).forEach(b => b.addEventListener('click', () => go(i + +b.dataset.dir)));
+    root.addEventListener('keydown', e => { if (e.key === 'ArrowRight') go(i + 1); if (e.key === 'ArrowLeft') go(i - 1); });
+    let x0 = null;
+    root.addEventListener('pointerdown', e => { if (e.pointerType !== 'mouse') x0 = e.clientX; });
+    root.addEventListener('pointerup', e => { if (x0 !== null && Math.abs(e.clientX - x0) > 50) go(i + (e.clientX < x0 ? 1 : -1)); x0 = null; });
+    // pause while the hero is off-screen or the tab is hidden; restart the current slide when back
+    const setPaused = p => { if (p === paused) return; paused = p; root.classList.toggle('paused', p); if (!p) go(i); else clearTimeout(timer); };
+    new IntersectionObserver(([e]) => setPaused(!e.isIntersecting), { threshold: .25 }).observe(root);
+    document.addEventListener('visibilitychange', () => setPaused(document.hidden));
+    go(0);
   });
 
   /* ---------- Spotlight hover (mouse-follow glow) ---------- */
@@ -228,18 +275,6 @@
       }
     });
   });
-
-  /* ---------- Process timeline fill ---------- */
-  const timeline = $('.timeline');
-  const tlSteps = timeline ? $$('.tl-step', timeline) : [];
-  function updateTimeline() {
-    if (!timeline) return;
-    const r = timeline.getBoundingClientRect();
-    const mid = innerHeight * 0.6;
-    const p = Math.max(0, Math.min(1, (mid - r.top) / r.height));
-    timeline.style.setProperty('--tp', p.toFixed(3));
-    tlSteps.forEach(s => { const sr = s.getBoundingClientRect(); s.classList.toggle('lit', sr.top + sr.height / 2 < mid); });
-  }
 
   /* ---------- Parallax ---------- */
   const para = reduce ? [] : $$('[data-parallax]');
