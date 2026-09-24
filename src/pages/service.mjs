@@ -1,5 +1,5 @@
 import { esc, rich, plain, icon, logo, logoName, html } from '../lib.mjs';
-import { CATEGORIES, SERVICES, INDUSTRIES, PHOTOS, img } from '../data/site.mjs';
+import { CATEGORIES, SERVICES, INDUSTRIES, img } from '../data/site.mjs';
 import { svcHref, SITE_URL } from '../layout.mjs';
 
 const R = '../';
@@ -66,7 +66,7 @@ export function servicePage(meta, s) {
       </div>
       <div class="media-stack" data-reveal="clip">
         <div class="media-dots"></div>
-        <div class="media-main"><img src="${img(cat.photo === meta.photo ? PHOTOS.services : cat.photo, 1000)}" alt="" loading="lazy" data-parallax=".08"></div>
+        <div class="media-main"><img src="${img(meta.photo2, 1000)}" alt="" loading="lazy" data-parallax=".08"></div>
         <div class="media-badge"><span class="b-ico">${icon(s.benefits[0].icon)}</span><div><strong>${esc(s.stats[0].value)}${esc(s.stats[0].suffix || '')}</strong><span>${esc(s.stats[0].label)}</span></div></div>
       </div>
     </div>
