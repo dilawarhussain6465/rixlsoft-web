@@ -124,7 +124,6 @@ function nav(root, home) {
         <li class="nav-item has-mega"><button class="nav-link" aria-expanded="false">Industries ${caret}</button>${megaIndustries(home)}</li>
         <li class="nav-item has-mega"><button class="nav-link" aria-expanded="false">Insights ${caret}</button>${megaInsights(root)}</li>
         <li class="nav-item has-mega"><button class="nav-link" aria-expanded="false">Company ${caret}</button>${megaCompany(root, home)}</li>
-        <li class="nav-item"><a class="nav-link" href="${root}careers.html">Careers</a></li>
       </ul>
       <div class="nav-right">
         <a href="${home}#contact" class="btn btn-blue btn-sm nav-cta" data-magnetic>Contact Us ${icon('arrow-right')}</a>
@@ -147,8 +146,7 @@ function nav(root, home) {
   <button class="mob-nav-link" aria-expanded="false" aria-controls="msub3">Insights ${caret}</button>
   <div class="mob-submenu" id="msub3"><div>${mobLinks([[`${root}case-studies/index.html`, 'folder-open', 'Case Studies'], [`${root}blog/index.html`, 'newspaper', 'Blog']])}</div></div>
   <button class="mob-nav-link" aria-expanded="false" aria-controls="msub4">Company ${caret}</button>
-  <div class="mob-submenu" id="msub4"><div>${mobLinks([[`${root}about.html`, 'building-2', 'About RixlSoft'], [`${root}about.html#why`, 'gem', 'Why RixlSoft'], [`${home}#contact`, 'mail', 'Contact Us']])}</div></div>
-  <a class="mob-nav-link" href="${root}careers.html">Careers</a>
+  <div class="mob-submenu" id="msub4"><div>${mobLinks([[`${root}about.html`, 'building-2', 'About RixlSoft'], [`${root}about.html#why`, 'gem', 'Why RixlSoft'], [`${root}careers.html`, 'briefcase', 'Careers'], [`${home}#contact`, 'mail', 'Contact Us']])}</div></div>
   <a href="${home}#contact" class="btn btn-blue" style="margin-top:24px;width:100%;justify-content:center;">Contact Us ${icon('arrow-right')}</a>
 </div>`;
 }
