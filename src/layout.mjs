@@ -163,7 +163,7 @@ function footer(root, home) {
         <p>AI-first product engineering company building intelligent systems, scalable platforms, immersive games, and AR/VR experiences for businesses worldwide.</p>
         <div class="footer-socials">
           ${socials.map(([k, n]) => html`<a href="#" class="f-social" aria-label="RixlSoft on ${n}" title="${n}">${brand(k)}</a>`)}
-          <a href="mailto:hello@rixlsoft.com" class="f-social" aria-label="Email RixlSoft" title="Email">${icon('mail')}</a>
+          <a href="${home}#contact" class="f-social" aria-label="Contact RixlSoft" title="Contact us">${icon('mail')}</a>
         </div>
       </div>
       ${CATEGORIES.map(c => html`<div class="f-col"><h5>${esc({ digital: 'Engineering', ai: 'AI &amp; Emerging', cloud: 'Cloud &amp; DevOps', crm: 'Salesforce &amp; CRM', specialized: 'Specialized' }[c.key])}</h5><ul class="f-links">${svcLinks(SERVICES.filter(s => s.cat === c.key))}</ul></div>`)}

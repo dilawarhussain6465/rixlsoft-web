@@ -9,7 +9,7 @@ import { home, contactSection } from './pages/home.mjs';
 import { servicePage } from './pages/service.mjs';
 import { hubPage } from './pages/hub.mjs';
 import { caseStudiesIndex, caseStudyPage, blogIndex, blogPage } from './pages/articles.mjs';
-import { aboutPage, careersPage } from './pages/company.mjs';
+import { aboutPage, careersPage, thanksPage } from './pages/company.mjs';
 import CASE_STUDIES from './data/case-studies.mjs';
 import BLOG from './data/blog.mjs';
 import { SERVICES } from './data/site.mjs';
@@ -39,7 +39,7 @@ write('index.html', layout({
   title: 'RixlSoft — AI-First Product Engineering Company',
   description: 'RixlSoft designs, builds and deploys AI-powered software, games, AR/VR experiences and scalable cloud platforms for startups and enterprises worldwide.',
   body: home(),
-  jsonld: [{ '@context': 'https://schema.org', '@type': 'Organization', name: 'RixlSoft', url: SITE_URL, email: 'hello@rixlsoft.com', foundingDate: '2024',
+  jsonld: [{ '@context': 'https://schema.org', '@type': 'Organization', name: 'RixlSoft', url: SITE_URL, foundingDate: '2024',
     description: 'AI-first product engineering company.' }],
 }));
 
@@ -56,6 +56,7 @@ for (const meta of SERVICES) {
 // Company pages
 write('about.html', layout({ root: '', path: 'about.html', ...aboutPage(), body: aboutPage().body + contactSection() }));
 write('careers.html', layout({ root: '', path: 'careers.html', ...careersPage() }));
+write('thanks.html', layout({ root: '', path: 'thanks.html', ...thanksPage() }));
 
 // Case studies & blog
 const csIdx = caseStudiesIndex();

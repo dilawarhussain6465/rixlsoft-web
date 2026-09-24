@@ -83,8 +83,11 @@ export const TECH_STACK = [
   { group: 'Mobile & Data', items: ['flutter', 'reactnative', 'swift', 'kotlin', 'postgresql', 'mongodb', 'redis', 'supabase', 'firebase'] },
 ];
 
-export const CONTACT_EMAIL = 'hello@rixlsoft.com';
-export const CAREERS_EMAIL = 'hello@rixlsoft.com'; // change to a dedicated careers inbox when available
+// Form delivery (GitHub Pages is static, so forms post to FormSubmit, which emails each
+// submission — including file attachments — to the inbox below). The inbox is stored
+// base64-encoded and only assembled in the browser on submit, so it is not shown on the site.
+// After activating FormSubmit you can replace it with the private alias string FormSubmit sends.
+export const FORM_INBOX = 'ZGlsYXdhcmh1c3NhaW42NDY1QGdtYWlsLmNvbQ==';
 
 // Verified photos for case studies and blog posts (by slug)
 export const ARTICLE_PHOTOS = {

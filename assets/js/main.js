@@ -313,19 +313,36 @@
     requestAnimationFrame(draw);
   }
 
-  /* ---------- Forms (contact, careers) → open email client with details ---------- */
-  $$('form[data-mailto]').forEach(form => form.addEventListener('submit', e => {
-    e.preventDefault();
-    let ok = true;
-    $$('[required]', form).forEach(f => { const bad = !f.value.trim() || (f.type === 'email' && !/^\S+@\S+\.\S+$/.test(f.value)); f.classList.toggle('invalid', bad); if (bad) ok = false; });
-    if (!ok) { toast('Please fill in the highlighted fields.', false); return; }
-    const d = Object.fromEntries(new FormData(form));
-    const body = Object.entries(d).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join('\n');
-    const subject = `${form.dataset.subject || 'Enquiry'} — ${d.Company || d.Name || ''}`;
-    location.href = `mailto:${form.dataset.mailto}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    toast('Thanks! Your email app is opening — we reply within 24 hours.', true);
-    form.reset();
-  }));
+  /* ---------- Forms (contact, careers) → FormSubmit emails each submission, with attachments ---------- */
+  const MAX_FILE = 5 * 1024 * 1024;
+  $$('form[data-inbox]').forEach(form => {
+    $$('.file-drop input[type=file]', form).forEach(inp => inp.addEventListener('change', () => {
+      const f = inp.files[0], label = inp.parentElement;
+      label.classList.toggle('has-file', !!f);
+      label.querySelector('.fd-text').textContent = f ? `${f.name} (${(f.size / 1048576).toFixed(1)} MB)` : 'Choose a file or drag it here';
+    }));
+    form.addEventListener('submit', e => {
+      let ok = true, msg = 'Please fill in the highlighted fields.';
+      $$('[required]', form).forEach(f => {
+        const bad = f.type === 'file' ? !f.files.length : (!f.value.trim() || (f.type === 'email' && !/^\S+@\S+\.\S+$/.test(f.value)));
+        (f.closest('.file-drop') || f).classList.toggle('invalid', bad); if (bad) ok = false;
+      });
+      $$('input[type=file]', form).forEach(f => {
+        const file = f.files[0]; if (!file) return;
+        const extOk = (f.accept || '').split(',').some(x => file.name.toLowerCase().endsWith(x.trim()));
+        if (file.size > MAX_FILE || !extOk) { ok = false; f.closest('.file-drop').classList.add('invalid'); msg = file.size > MAX_FILE ? 'The file is larger than 5 MB.' : 'Please upload a supported file type.'; }
+      });
+      if (!ok) { e.preventDefault(); toast(msg, false); return; }
+      form.action = 'https://formsubmit.co/' + atob(form.dataset.inbox);
+      const btn = form.querySelector('[type=submit]');
+      btn.disabled = true; btn.innerHTML = 'Sending…';
+    });
+  });
+  const thanks = $('[data-thanks]');
+  if (thanks) {
+    const type = new URLSearchParams(location.search).get('type');
+    thanks.querySelectorAll('[data-for]').forEach(el => { el.hidden = el.dataset.for !== (type === 'careers' ? 'careers' : 'contact'); });
+  }
   function toast(msg, good) {
     let t = $('.toast');
     if (!t) { t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); document.body.appendChild(t); }

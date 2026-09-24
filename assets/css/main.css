@@ -976,3 +976,18 @@ textarea.form-control { resize:vertical; min-height:110px; }
   .split-word > span { transform:none; }
   .marquee-track { animation:none; }
 }
+
+/* Form uploads + spam honeypot */
+.hp { position:absolute !important; left:-9999px !important; width:1px; height:1px; opacity:0; }
+.form-group label .opt { font-weight:400; color:rgba(255,255,255,.4); letter-spacing:0; }
+.file-drop { position:relative; display:flex; align-items:center; gap:12px; padding:16px; border-radius:10px; border:1.5px dashed rgba(255,255,255,.22); background:rgba(255,255,255,.04); cursor:pointer; transition:all .25s; color:rgba(255,255,255,.7) !important; font-size:14px !important; font-weight:500 !important; letter-spacing:0 !important; }
+.file-drop:hover, .file-drop:focus-within { border-color:var(--cyan); background:rgba(0,200,240,.06); }
+.file-drop input { position:absolute; inset:0; opacity:0; cursor:pointer; }
+.file-drop .fd-ico { width:36px; height:36px; flex-shrink:0; border-radius:9px; display:grid; place-items:center; font-size:17px; color:var(--cyan); background:rgba(0,200,240,.1); }
+.file-drop.has-file { border-style:solid; border-color:var(--mint); }
+.file-drop.has-file .fd-ico { color:#fff; background:var(--mint); }
+.file-drop.invalid { border-color:#ff5c7a; }
+.form-submit:disabled { opacity:.7; cursor:progress; }
+.thanks-card { max-width:680px; margin:0 auto; text-align:center; }
+.thanks-card .er-ico { background:linear-gradient(135deg,#00d4a0,#00c8f0); }
+.thanks-card .hero-actions { justify-content:center; margin-top:28px; }
