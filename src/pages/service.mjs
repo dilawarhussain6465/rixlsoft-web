@@ -1,5 +1,5 @@
 import { esc, rich, plain, icon, logo, logoName, html } from '../lib.mjs';
-import { CATEGORIES, SERVICES, INDUSTRIES, img } from '../data/site.mjs';
+import { CATEGORIES, SERVICES, INDUSTRIES, img, srcset } from '../data/site.mjs';
 import { svcHref, SITE_URL } from '../layout.mjs';
 
 const R = '../';
@@ -36,7 +36,7 @@ export function servicePage(meta, s) {
       </div>
       <div class="hero-visual" data-reveal="zoom" style="--d:.25s">
         <div class="ring"></div>
-        <div class="hero-frame" data-tilt="5"><img src="${img(meta.photo, 1000)}" alt="${esc(meta.name)} at RixlSoft" fetchpriority="high"></div>
+        <div class="hero-frame" data-tilt="5"><img src="${img(meta.photo, 1000)}" srcset="${srcset(meta.photo)}" sizes="(max-width:1180px) 92vw, 560px" alt="${esc(meta.name)} at RixlSoft" fetchpriority="high"></div>
         <div class="hero-chip"><span class="c-ico">${icon(meta.icon)}</span><div><strong>${esc(meta.name)}</strong><small>${esc(meta.short)}</small></div></div>
         <div class="float-card fc-3">
           <div class="fc-logos">${allTech.slice(0, 4).map(k => html`<span>${logo(k, R, 20)}</span>`)}</div>
@@ -66,7 +66,7 @@ export function servicePage(meta, s) {
       </div>
       <div class="media-stack" data-reveal="clip">
         <div class="media-dots"></div>
-        <div class="media-main"><img src="${img(meta.photo2, 1000)}" alt="" loading="lazy" data-parallax=".08"></div>
+        <div class="media-main"><img src="${img(meta.photo2, 1000)}" srcset="${srcset(meta.photo2)}" sizes="(max-width:1180px) 92vw, 560px" alt="${esc(meta.name)} project work" loading="lazy" data-parallax=".08"></div>
         <div class="media-badge"><span class="b-ico">${icon(s.benefits[0].icon)}</span><div><strong>${esc(s.stats[0].value)}${esc(s.stats[0].suffix || '')}</strong><span>${esc(s.stats[0].label)}</span></div></div>
       </div>
     </div>
@@ -180,7 +180,7 @@ export function servicePage(meta, s) {
     </div>
     <div class="ind-chips" data-stagger=".06" data-reveal-type="up">
       ${s.industries.map(k => { const i = INDUSTRIES[k]; return html`
-      <div class="ind-card" tabindex="0"><img src="${img(i.photo, 400)}" alt="" loading="lazy"><span class="i-ico">${icon(i.icon)}</span><h4>${esc(i.name)}</h4><p>${esc(i.desc)}</p></div>`; })}
+      <div class="ind-card" tabindex="0"><img src="${img(i.photo, 400)}" alt="${esc(i.name)}" loading="lazy"><span class="i-ico">${icon(i.icon)}</span><h4>${esc(i.name)}</h4><p>${esc(i.desc)}</p></div>`; })}
     </div>
   </div>
 </section>
@@ -219,7 +219,7 @@ export function servicePage(meta, s) {
     <div class="related-grid" data-stagger=".1" data-reveal-type="up">
       ${s.related.map(slug => { const r = SERVICES.find(x => x.slug === slug); return html`
       <a class="rel-card" href="${slug}.html">
-        <img src="${img(r.photo, 700)}" alt="" loading="lazy">
+        <img src="${img(r.photo, 700)}" alt="${esc(r.name)} services" loading="lazy">
         <span class="r-ico">${icon(r.icon)}</span>
         <h3>${esc(r.name)}</h3><p>${esc(r.short)}</p>
         <span class="more">Learn more ${icon('arrow-right')}</span>

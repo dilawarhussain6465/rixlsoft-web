@@ -1,5 +1,5 @@
 import { esc, rich, icon, logo, logoName, html } from '../lib.mjs';
-import { SERVICES, INDUSTRIES, HOME_INDUSTRIES, PHOTOS, TECH_STACK, img } from '../data/site.mjs';
+import { SERVICES, INDUSTRIES, HOME_INDUSTRIES, PHOTOS, TECH_STACK, img, srcset } from '../data/site.mjs';
 import { svcHref } from '../layout.mjs';
 import { whySection, testimonialsSection } from './company.mjs';
 import { csCard, blogCard } from './articles.mjs';
@@ -62,7 +62,7 @@ export function home() {
 <section class="hs" id="home" data-slider aria-roledescription="carousel" aria-label="RixlSoft highlights">
   ${SLIDES.map((s, i) => html`
   <div class="hs-slide${i === 0 ? ' on' : ''}" role="group" aria-roledescription="slide" aria-label="${i + 1} of ${SLIDES.length}"${i ? ' aria-hidden="true"' : ''}>
-    <img class="hs-bg" src="${img(s.photo, 1920)}" alt=""${i === 0 ? ' fetchpriority="high"' : ' loading="lazy"'}>
+    <img class="hs-bg" src="${img(s.photo, 1920)}" srcset="${srcset(s.photo, [800, 1280, 1920])}" sizes="100vw" alt="${esc(s.tag)} by RixlSoft"${i === 0 ? ' fetchpriority="high"' : ' loading="lazy"'}>
     <div class="container hs-content">
       <div class="hs-eyebrow anim" style="--k:0">${esc(s.tag)}</div>
       ${i === 0 ? html`<h1 class="hs-title anim" style="--k:1">${rich(s.title)}</h1>` : html`<h2 class="hs-title anim" style="--k:1">${rich(s.title)}</h2>`}
@@ -103,7 +103,7 @@ export function home() {
     <div class="bento" data-stagger=".07" data-reveal-type="zoom">
       ${SHOWCASE.map(t => { const m = SERVICES.find(s => s.slug === t.slug); return html`
       <a class="tile tile-${t.area}" href="${svcHref(R, t.slug)}">
-        <img src="${img(t.photo, t.area === 'g' ? 1200 : 800)}" alt="" loading="lazy">
+        <img src="${img(t.photo, t.area === 'g' ? 1200 : 800)}" alt="${esc(t.title)}" loading="lazy">
         <span class="tile-tag">${icon(m.icon)} ${esc(t.tag)}</span>
         <span class="tile-body"><h3>${esc(t.title)}</h3><p>${esc(t.text)}</p></span>
         <span class="tile-go">${icon('arrow-up-right')}</span>
@@ -142,7 +142,7 @@ export function home() {
     <div class="ind-grid" data-stagger=".05" data-reveal-type="up">
       ${HOME_INDUSTRIES.map(k => { const i = INDUSTRIES[k]; return html`
       <div class="ind-card" tabindex="0">
-        <img src="${img(i.photo, 500)}" alt="" loading="lazy">
+        <img src="${img(i.photo, 500)}" alt="${esc(i.name)} software solutions" loading="lazy">
         <span class="i-ico">${icon(i.icon)}</span>
         <h4>${esc(i.name)}</h4><p>${esc(i.desc)}</p>
       </div>`; })}
@@ -211,7 +211,7 @@ ${whySection('')}
     <div class="ins">
       ${(() => { const f = CASE_STUDIES[0]; return html`
       <a class="ins-feature" href="case-studies/${f.slug}.html" data-reveal="clip">
-        <img src="${img(ARTICLE_PHOTOS[f.slug], 1000)}" alt="" loading="lazy">
+        <img src="${img(ARTICLE_PHOTOS[f.slug], 1000)}" alt="${esc(f.title)}" loading="lazy">
         <div class="ins-feature-body">
           <div class="ins-meta"><span class="ins-type">Case Study</span>${esc(f.date)}</div>
           <h3>${esc(f.title)}</h3>
@@ -222,7 +222,7 @@ ${whySection('')}
       <div class="ins-list" data-stagger=".08" data-reveal-type="left">
         ${CASE_STUDIES.slice(1).map(c => html`
         <a class="ins-item" href="case-studies/${c.slug}.html">
-          <div class="ins-thumb"><img src="${img(ARTICLE_PHOTOS[c.slug], 300)}" alt="" loading="lazy"></div>
+          <div class="ins-thumb"><img src="${img(ARTICLE_PHOTOS[c.slug], 300)}" alt="${esc(c.title)}" loading="lazy"></div>
           <div>
             <div class="ins-meta"><span class="ins-type">${esc(INDUSTRIES[c.industry].name)}</span>${esc(c.date)}</div>
             <h4>${esc(c.title)}</h4>
