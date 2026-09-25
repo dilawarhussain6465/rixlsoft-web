@@ -1,7 +1,7 @@
 import { esc, rich, icon, logo, logoName, html } from '../lib.mjs';
 import { SERVICES, INDUSTRIES, HOME_INDUSTRIES, PHOTOS, TECH_STACK, img } from '../data/site.mjs';
 import { svcHref } from '../layout.mjs';
-import { whySection } from './company.mjs';
+import { whySection, testimonialsSection } from './company.mjs';
 import { csCard, blogCard } from './articles.mjs';
 import CASE_STUDIES from '../data/case-studies.mjs';
 import BLOG from '../data/blog.mjs';
@@ -233,6 +233,9 @@ ${whySection('')}
     </div>
   </div>
 </section>
+
+<!-- ================= CLIENT VOICES ================= -->
+${testimonialsSection()}
 
 <!-- ================= BLOG ================= -->
 <section class="sec bg-light" id="blog">

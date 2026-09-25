@@ -991,3 +991,38 @@ textarea.form-control { resize:vertical; min-height:110px; }
 .thanks-card { max-width:680px; margin:0 auto; text-align:center; }
 .thanks-card .er-ico { background:linear-gradient(135deg,#00d4a0,#00c8f0); }
 .thanks-card .hero-actions { justify-content:center; margin-top:28px; }
+
+/* ============================================================
+   CLIENT VOICES (testimonials) + TRUSTED BY
+============================================================ */
+.tm-sec { background:radial-gradient(ellipse 50% 60% at 90% 0%, rgba(0,200,240,.16), transparent 70%), linear-gradient(160deg, #07243a 0%, #05101e 65%); color:#fff; overflow:hidden; }
+.tm-title { font-family:var(--font-h); font-size:clamp(28px,3.2vw,44px); font-weight:700; line-height:1.15; letter-spacing:-.02em; max-width:760px; }
+.tm-nav { display:flex; gap:10px; }
+.tm-track { display:grid; grid-auto-flow:column; grid-auto-columns:calc((100% - 40px) / 3); gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; scrollbar-width:none; padding-bottom:4px; }
+.tm-track::-webkit-scrollbar { display:none; }
+.tm-card { position:relative; scroll-snap-align:start; display:flex; flex-direction:column; margin:0; padding:34px 32px 26px; border-radius:22px; background:rgba(255,255,255,.035); border:1px solid rgba(255,255,255,.1); overflow:hidden; isolation:isolate; transition:border-color .35s, background .35s, transform .4s var(--ease); }
+.tm-card:hover { border-color:rgba(0,200,240,.35); background:rgba(255,255,255,.06); transform:translateY(-4px); }
+.tm-card.spot::before { background:radial-gradient(380px circle at var(--mx,50%) var(--my,50%), rgba(0,200,240,.12), transparent 50%); }
+.tm-q { font-family:Georgia, serif; font-size:84px; line-height:.8; height:44px; font-weight:700; background:var(--grad-3); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; margin-bottom:14px; }
+.tm-card blockquote { font-size:16px; line-height:1.8; color:rgba(255,255,255,.86); margin:0 0 28px; flex:1; }
+.tm-card figcaption { display:flex; justify-content:space-between; align-items:center; gap:14px; padding-top:22px; border-top:1px solid rgba(255,255,255,.12); }
+.tm-card figcaption strong { display:block; font-family:var(--font-h); font-size:16px; font-weight:700; }
+.tm-card figcaption span { font-size:13px; color:rgba(255,255,255,.55); }
+.tm-card .client-mark { flex-shrink:0; }
+.client-mark { display:inline-flex; align-items:center; gap:10px; color:#fff; }
+.cm-mono { width:34px; height:34px; border-radius:9px; display:grid; place-items:center; font-family:var(--font-h); font-size:12.5px; font-weight:800; letter-spacing:.02em; color:#fff; background:linear-gradient(135deg, rgba(10,110,245,.9), rgba(0,200,240,.9)); }
+.cm-name { font-family:var(--font-h); font-size:15.5px; font-weight:800; letter-spacing:-.01em; line-height:1.1; }
+.cm-name small { display:block; font-size:10px; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.55); margin-top:2px; }
+.tm-card .cm-name { display:none; }
+.tm-card .cm-mono { width:40px; height:40px; font-size:13.5px; }
+.trusted { margin-top:48px; padding-top:28px; border-top:1px solid rgba(255,255,255,.1); }
+.trusted-row { display:flex; flex-wrap:wrap; align-items:center; gap:16px 40px; }
+.trusted-row .client-mark { opacity:.8; transition:opacity .3s, transform .3s var(--ease); }
+.trusted-row .client-mark:hover { opacity:1; transform:translateY(-2px); }
+@media (max-width:1180px) { .tm-track { grid-auto-columns:calc((100% - 20px) / 2); } }
+@media (max-width:640px) {
+  .tm-track { grid-auto-columns:88%; }
+  .tm-card { padding:28px 22px 22px; }
+  .tm-card figcaption { flex-direction:column; align-items:flex-start; }
+  .trusted-row { gap:14px 24px; }
+}
