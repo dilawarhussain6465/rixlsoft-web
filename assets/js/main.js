@@ -195,19 +195,6 @@
     go(0);
   });
 
-  /* ---------- Testimonials carousel arrows ---------- */
-  $$('[data-tm-track]').forEach(track => {
-    const sec = track.closest('section');
-    $$('[data-tm]', sec).forEach(b => b.addEventListener('click', () => {
-      const card = track.firstElementChild; if (!card) return;
-      const step = card.getBoundingClientRect().width + parseFloat(getComputedStyle(track).columnGap || 20);
-      const max = track.scrollWidth - track.clientWidth;
-      let x = track.scrollLeft + step * +b.dataset.tm;
-      if (x > max + 5) x = 0; else if (x < -5) x = max;   // wrap around
-      track.scrollTo({ left: x, behavior: reduce ? 'auto' : 'smooth' });
-    }));
-  });
-
   /* ---------- Spotlight hover (mouse-follow glow) ---------- */
   $$('.spot, .benefit').forEach(el => {
     el.addEventListener('pointermove', e => {
