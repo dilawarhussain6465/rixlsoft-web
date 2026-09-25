@@ -39,7 +39,7 @@ export function hubPage(details) {
       <div class="hub-grid" data-stagger=".07" data-reveal-type="up">
         ${SERVICES.filter(s => s.cat === c.key).map(s => html`
         <a class="hub-card" href="${s.slug}.html">
-          <div class="hc-img"><div class="hc-clip"><img src="${img(s.photo, 700)}" alt="" loading="lazy"></div><span class="hc-ico">${icon(s.icon)}</span></div>
+          <div class="hc-img"><div class="hc-clip"><img src="${img(s.photo, 700)}" alt="${esc(s.name)} services" loading="lazy"></div><span class="hc-ico">${icon(s.icon)}</span></div>
           <div class="hc-body">
             <h3>${esc(s.name)}</h3>
             <p>${esc(details[s.slug].hero.lead.split(/(?<=\.)\s/)[0])}</p>
@@ -53,7 +53,8 @@ export function hubPage(details) {
 `;
   return {
     title: 'Software Development Services | RixlSoft',
-    description: 'Explore RixlSoft services: web & app development, generative AI, AR/VR, game development, cloud & DevOps, cybersecurity, QA, e-commerce and dedicated teams.',
+    description: 'RixlSoft services: web & app development, generative AI, AR/VR, games, cloud & DevOps, Salesforce & CRM, QA, e-commerce and dedicated teams.',
+    breadcrumbs: [['Home', ''], ['Services', 'services/']],
     image: img(PHOTOS.services, 1200),
     body,
   };

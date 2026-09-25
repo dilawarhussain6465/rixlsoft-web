@@ -1,5 +1,5 @@
 import { esc, icon, logo, html } from '../lib.mjs';
-import { PHOTOS, PLATFORMS, RECOGNITION, FORM_INBOX, img } from '../data/site.mjs';
+import { PHOTOS, PLATFORMS, RECOGNITION, FORM_INBOX, img, srcset } from '../data/site.mjs';
 import { SITE_URL } from '../layout.mjs';
 import { TESTIMONIALS, CLIENTS } from '../data/testimonials.mjs';
 import { PROCESS } from './home.mjs';
@@ -52,7 +52,7 @@ const hero = (crumb, badge, title, lead, actions, photo) => html`
       </div>
       <div class="hero-visual" data-reveal="zoom" style="--d:.25s">
         <div class="ring"></div>
-        <div class="hero-frame" data-tilt="5"><img src="${img(photo, 1000)}" alt="" fetchpriority="high"></div>
+        <div class="hero-frame" data-tilt="5"><img src="${img(photo, 1000)}" srcset="${srcset(photo)}" sizes="(max-width:1180px) 92vw, 560px" alt="RixlSoft team collaborating" fetchpriority="high"></div>
       </div>
     </div>
   </div>
@@ -151,7 +151,7 @@ ${whySection('')}
     </div>
   </div>
 </section>`;
-  return { title: 'About Us | RixlSoft', description: 'About RixlSoft: an AI-first product engineering company building software, games, XR, cloud and CRM systems for startups and enterprises worldwide.', image: img(PHOTOS.about, 1200), body };
+  return { breadcrumbs: [['Home', ''], ['About Us', 'about.html']], title: 'About Us | RixlSoft', description: 'About RixlSoft: an AI-first product engineering company building software, games, XR, cloud and CRM systems for startups and enterprises worldwide.', image: img(PHOTOS.about, 1200), body };
 }
 
 /* ---------------- Careers ---------------- */
@@ -251,7 +251,7 @@ ${hero('Careers', 'Careers at RixlSoft', 'Build What Comes Next <em>With Us</em>
     </div>
   </div>
 </section>`;
-  return { title: 'Careers | RixlSoft', description: 'Careers at RixlSoft: join a remote-first, AI-first engineering team. No current openings — submit a general application.', image: img(PHOTOS.about, 1200), body };
+  return { breadcrumbs: [['Home', ''], ['Careers', 'careers.html']], title: 'Careers | RixlSoft', description: 'Careers at RixlSoft: join a remote-first, AI-first engineering team. No current openings — submit a general application.', image: img(PHOTOS.about, 1200), body };
 }
 
 /* ---------------- Thank-you page (after FormSubmit) ---------------- */
@@ -318,4 +318,26 @@ export function testimonialsSection(root = '') {
     ${trustedStrip(root)}
   </div>
 </section>`;
+}
+
+/* ---------------- 404 ---------------- */
+export function notFoundPage() {
+  const body = html`
+<section class="page-hero" style="min-height:calc(100vh - 40px);display:flex;align-items:center">
+  <div class="orb orb-1"></div><div class="orb orb-2"></div>
+  <div class="grid-bg"></div>
+  <div class="container">
+    <div class="thanks-card">
+      <div class="nf-code">404</div>
+      <h1>This page doesn't exist <em>(anymore)</em></h1>
+      <p class="lead" style="margin:0 auto">The link may be outdated or mistyped. Here are some good places to continue:</p>
+      <div class="hero-actions">
+        <a href="/rixlsoft-web/" class="btn btn-blue">Go to Home ${icon('arrow-right')}</a>
+        <a href="/rixlsoft-web/services/" class="btn btn-outline-dark">Our Services</a>
+        <a href="/rixlsoft-web/case-studies/" class="btn btn-outline-dark">Case Studies</a>
+      </div>
+    </div>
+  </div>
+</section>`;
+  return { title: 'Page Not Found | RixlSoft', description: 'The page you are looking for could not be found.', body };
 }

@@ -116,3 +116,6 @@ export const RECOGNITION = [
   { icon: 'star', t: 'Top Rated on Clutch' },
   { icon: 'shield-check', t: 'ISO 9001 Aligned' },
 ];
+
+/** Responsive `srcset` for an Unsplash photo so phones download smaller files. */
+export const srcset = (id, widths = [640, 1000, 1400]) => widths.map(w => `${img(id, w)} ${w}w`).join(', ');

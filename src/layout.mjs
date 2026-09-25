@@ -214,7 +214,9 @@ function footer(root, home) {
 export function layout(p) {
   const home = p.root || './';
   const url = SITE_URL + p.path;
-  const ld = (p.jsonld || []).map(o => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join('\n');
+  const ogImage = p.image || `${SITE_URL}assets/brand/og-default.png`;
+  const crumbs = p.breadcrumbs ? [{ '@context': 'https://schema.org', '@type': 'BreadcrumbList', itemListElement: p.breadcrumbs.map(([name, path], i) => ({ '@type': 'ListItem', position: i + 1, name, item: SITE_URL + path })) }] : [];
+  const ld = [...(p.jsonld || []), ...crumbs].map(o => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, '\\u003c')}</script>`).join('\n');
   return `<!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
@@ -222,20 +224,30 @@ export function layout(p) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Security-Policy" content="${CSP}">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="format-detection" content="telephone=no">${p.noindex ? '\n<meta name="robots" content="noindex, nofollow">' : ''}
-<title>${esc(p.title)}</title>
+<meta name="format-detection" content="telephone=no">
+<meta name="robots" content="${p.noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1'}">
+<title>${esc(p.metaTitle || p.title)}</title>
 <meta name="description" content="${esc(p.description)}">
+<meta name="author" content="RixlSoft">
 <link rel="canonical" href="${url}">
 <meta name="theme-color" content="#05101e">
-<meta property="og:type" content="website">
+<link rel="icon" href="${p.root}assets/brand/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="${p.root}assets/brand/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="${p.root}assets/brand/apple-touch-icon.png">
+<link rel="manifest" href="${p.root}site.webmanifest">
+<meta property="og:type" content="${p.ogType || 'website'}">
 <meta property="og:site_name" content="RixlSoft">
-<meta property="og:title" content="${esc(p.title)}">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="${esc(p.metaTitle || p.title)}">
 <meta property="og:description" content="${esc(p.description)}">
 <meta property="og:url" content="${url}">
-<meta property="og:image" content="${p.image || img(PHOTOS.hero, 1200)}">
+<meta property="og:image" content="${ogImage}">
+<meta property="og:image:alt" content="${esc(p.metaTitle || p.title)}">${p.image ? '' : '\n<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">'}${p.published ? `\n<meta property="article:published_time" content="${p.published}">` : ''}
 <meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2305101e'/%3E%3Ctext x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial' font-weight='900' font-size='38' fill='%2300c8f0'%3ER%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
+<meta name="twitter:title" content="${esc(p.metaTitle || p.title)}">
+<meta name="twitter:description" content="${esc(p.description)}">
+<meta name="twitter:image" content="${ogImage}">
+${p.preload ? `<link rel="preload" as="image" href="${p.preload.src}" imagesrcset="${p.preload.srcset}" imagesizes="${p.preload.sizes}" fetchpriority="high">\n` : ''}<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preconnect" href="https://images.unsplash.com">
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet">

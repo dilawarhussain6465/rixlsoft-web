@@ -54,3 +54,11 @@ The site is static (no server, database or logins), so the main risks are script
 - `/.well-known/security.txt` tells researchers how to report issues; `.nojekyll` serves files as-is.
 
 Account-level (do these in GitHub/Gmail, not in code): enable 2FA on GitHub, keep "Enforce HTTPS" on in *Settings → Pages*, protect the `main` branch, and replace `FORM_INBOX` with the FormSubmit alias so no email address appears in this public repository.
+
+## SEO
+
+- Every page: unique `<title>` (≤60 chars via `metaTitle` where the headline is long), meta description (≤160), canonical URL, robots directives (`max-image-preview:large`), Open Graph + Twitter cards (branded `assets/brand/og-default.png` fallback), favicon/app icons and `site.webmanifest`.
+- Structured data (JSON-LD): `Organization`, `WebSite` and service `ItemList` on home; `Service` + `FAQPage` on service pages; `Article`/`BlogPosting` with dates and publisher logo; `BreadcrumbList` on every inner page.
+- Descriptive `alt` text on all content images; responsive `srcset` so phones download smaller photos; LCP hero image preloaded on the home page.
+- `sitemap.xml` with `lastmod`/`priority`; branded `404.html`; `thanks.html`/`404.html` are `noindex`.
+- Submit `sitemap.xml` in Google Search Console (the site is already verified via `googlec3128e30c7798c4d.html`).

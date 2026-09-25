@@ -1,5 +1,5 @@
 import { esc, icon, logo, logoName, html } from '../lib.mjs';
-import { SERVICES, INDUSTRIES, ARTICLE_PHOTOS, img } from '../data/site.mjs';
+import { SERVICES, INDUSTRIES, ARTICLE_PHOTOS, img, srcset } from '../data/site.mjs';
 import CASE_STUDIES from '../data/case-studies.mjs';
 import BLOG from '../data/blog.mjs';
 import { SITE_URL } from '../layout.mjs';
@@ -7,6 +7,23 @@ import { SITE_URL } from '../layout.mjs';
 const R = '../';
 const svc = slug => SERVICES.find(s => s.slug === slug);
 const photo = (slug, w) => img(ARTICLE_PHOTOS[slug], w);
+// Short <title>s (Google shows ~60 chars) — full headline still used for H1 and social cards
+const SEO_TITLES = {
+  'ar-mobile-game-launch': 'AR Mobile Game: 200K Downloads in 30 Days | RixlSoft',
+  'fintech-ai-financial-modeling': 'Generative AI Fintech Platform Case Study | RixlSoft',
+  'ecommerce-scale-1m-users': 'E-Commerce Scaled to 1M Users, Zero Downtime | RixlSoft',
+  'healthcare-document-ai': 'Healthcare Document AI Case Study | RixlSoft',
+  'salesforce-logistics-crm': 'Salesforce CRM for Logistics Case Study | RixlSoft',
+  'agentic-ai-enterprise-2026': 'Agentic AI in 2026: Enterprise Guide | RixlSoft',
+  'legacy-modernization-ai-era': 'Legacy Modernization in the AI Era | RixlSoft',
+  'ai-powered-crm-salesforce-hubspot': 'AI CRM: Agentforce vs Breeze vs Copilot | RixlSoft',
+  'spatial-computing-enterprise-roi': 'Enterprise AR & VR: Where It Pays Off | RixlSoft',
+  'finops-cloud-cost-optimization': 'FinOps Guide: Cut Cloud Costs 20–40% | RixlSoft',
+};
+const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const isoDate = d => { const [m, y] = d.split(' '); return `${y}-${String(MONTHS.indexOf(m) + 1).padStart(2, '0')}-01`; };
+const PUBLISHER = { '@type': 'Organization', name: 'RixlSoft', url: SITE_URL, logo: { '@type': 'ImageObject', url: `${SITE_URL}assets/brand/icon-512.png` } };
+
 const anchor = t => t.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
 const pageHero = (crumbs, body, visual = '') => html`
@@ -39,7 +56,7 @@ const serviceCards = slugs => html`
 <div class="related-grid" data-stagger=".1" data-reveal-type="up">
   ${slugs.map(slug => { const r = svc(slug); return html`
   <a class="rel-card" href="${R}services/${slug}.html">
-    <img src="${img(r.photo, 700)}" alt="" loading="lazy">
+    <img src="${img(r.photo, 700)}" alt="${esc(r.name)} services" loading="lazy">
     <span class="r-ico">${icon(r.icon)}</span>
     <h3>${esc(r.name)}</h3><p>${esc(r.short)}</p>
     <span class="more">Explore service ${icon('arrow-right')}</span>
@@ -48,7 +65,7 @@ const serviceCards = slugs => html`
 
 export const csCard = (c, root = R) => html`
 <a class="cs-card" href="${root}case-studies/${c.slug}.html">
-  <div class="cs-img"><img src="${photo(c.slug, 700)}" alt="" loading="lazy"><span class="cs-chip">${icon(INDUSTRIES[c.industry].icon)} ${esc(INDUSTRIES[c.industry].name)}</span></div>
+  <div class="cs-img"><img src="${photo(c.slug, 700)}" alt="${esc(c.title)}" loading="lazy"><span class="cs-chip">${icon(INDUSTRIES[c.industry].icon)} ${esc(INDUSTRIES[c.industry].name)}</span></div>
   <div class="cs-body">
     <div class="cs-meta">Case Study · ${esc(c.date)}</div>
     <h3>${esc(c.title)}</h3>
@@ -59,7 +76,7 @@ export const csCard = (c, root = R) => html`
 
 export const blogCard = (b, root = R) => html`
 <a class="blog-card" href="${root}blog/${b.slug}.html">
-  <div class="blog-img"><img src="${photo(b.slug, 700)}" alt="" loading="lazy"><span class="cs-chip">${esc(b.category)}</span></div>
+  <div class="blog-img"><img src="${photo(b.slug, 700)}" alt="${esc(b.title)}" loading="lazy"><span class="cs-chip">${esc(b.category)}</span></div>
   <div class="blog-body">
     <div class="cs-meta">${esc(b.date)} · ${b.readMins} min read</div>
     <h3>${esc(b.title)}</h3>
@@ -79,7 +96,7 @@ ${pageHero([['Home', '../'], ['Case Studies']], html`
 <section class="sec bg-light">
   <div class="container">
     <a class="cs-feature" href="${f.slug}.html" data-reveal="up">
-      <div class="cs-feature-img"><img src="${photo(f.slug, 1200)}" alt="" loading="lazy"></div>
+      <div class="cs-feature-img"><img src="${photo(f.slug, 1200)}" srcset="${srcset(ARTICLE_PHOTOS[f.slug])}" sizes="(max-width:900px) 94vw, 620px" alt="${esc(f.title)}" loading="lazy"></div>
       <div class="cs-feature-body">
         <div class="cs-meta"><span class="ins-type">Featured</span> ${esc(INDUSTRIES[f.industry].name)} · ${esc(f.date)}</div>
         <h2>${esc(f.title)}</h2>
@@ -92,7 +109,7 @@ ${pageHero([['Home', '../'], ['Case Studies']], html`
   </div>
 </section>
 ${ctaBand('Want results like these?', 'Tell us about your project and we will share the case studies most relevant to your industry.')}`;
-  return { title: 'Case Studies | RixlSoft', description: 'RixlSoft case studies: AI platforms, mobile games, e-commerce scale, healthcare automation and Salesforce CRM transformations with measurable results.', image: photo(f.slug, 1200), body };
+  return { breadcrumbs: [['Home', ''], ['Case Studies', 'case-studies/']], title: 'Case Studies | RixlSoft', description: 'RixlSoft case studies: AI platforms, mobile games, e-commerce scale, healthcare automation and Salesforce CRM transformations with measurable results.', image: photo(f.slug, 1200), body };
 }
 
 /* ---------------- Case study detail ---------------- */
@@ -112,7 +129,7 @@ ${pageHero([['Home', '../'], ['Case Studies', 'index.html'], [esc(c.title)]], ht
   </div>`, html`
   <div class="hero-visual" data-reveal="zoom" style="--d:.25s">
     <div class="ring"></div>
-    <div class="hero-frame" data-tilt="5"><img src="${photo(c.slug, 1000)}" alt="" fetchpriority="high"></div>
+    <div class="hero-frame" data-tilt="5"><img src="${photo(c.slug, 1000)}" srcset="${srcset(ARTICLE_PHOTOS[c.slug])}" sizes="(max-width:1180px) 92vw, 560px" alt="${esc(c.title)}" fetchpriority="high"></div>
     <div class="hero-chip"><span class="c-ico">${icon(ind.icon)}</span><div><strong>${esc(ind.name)}</strong><small>${esc(c.date)}</small></div></div>
   </div>`)}
 
@@ -207,8 +224,9 @@ ${pageHero([['Home', '../'], ['Case Studies', 'index.html'], [esc(c.title)]], ht
 </section>
 ${ctaBand('Have a similar challenge?', 'Book a free discovery call. We will map your goals and show you how we would approach it — no obligation.')}`;
   return {
-    title: `${c.title} | RixlSoft Case Study`, description: c.summary.slice(0, 158), image: photo(c.slug, 1200), body,
-    jsonld: [{ '@context': 'https://schema.org', '@type': 'Article', headline: c.title, description: c.summary, image: photo(c.slug, 1200), author: { '@type': 'Organization', name: 'RixlSoft' }, publisher: { '@type': 'Organization', name: 'RixlSoft' }, url: `${SITE_URL}case-studies/${c.slug}.html` }],
+    title: c.title, metaTitle: SEO_TITLES[c.slug], ogType: 'article', published: isoDate(c.date), description: c.summary.slice(0, 158), image: photo(c.slug, 1200), body,
+    breadcrumbs: [['Home', ''], ['Case Studies', 'case-studies/'], [c.title, `case-studies/${c.slug}.html`]],
+    jsonld: [{ '@context': 'https://schema.org', '@type': 'Article', headline: c.title, description: c.summary, image: photo(c.slug, 1200), datePublished: isoDate(c.date), dateModified: isoDate(c.date), author: { '@type': 'Organization', name: 'RixlSoft', url: SITE_URL }, publisher: PUBLISHER, mainEntityOfPage: `${SITE_URL}case-studies/${c.slug}.html`, about: c.services.map(x => svc(x).name) }],
   };
 }
 
@@ -223,7 +241,7 @@ ${pageHero([['Home', '../'], ['Blog']], html`
 <section class="sec bg-light">
   <div class="container">
     <a class="cs-feature" href="${f.slug}.html" data-reveal="up">
-      <div class="cs-feature-img"><img src="${photo(f.slug, 1200)}" alt="" loading="lazy"></div>
+      <div class="cs-feature-img"><img src="${photo(f.slug, 1200)}" srcset="${srcset(ARTICLE_PHOTOS[f.slug])}" sizes="(max-width:900px) 94vw, 620px" alt="${esc(f.title)}" loading="lazy"></div>
       <div class="cs-feature-body">
         <div class="cs-meta"><span class="ins-type">Latest</span> ${esc(f.category)} · ${esc(f.date)} · ${f.readMins} min read</div>
         <h2>${esc(f.title)}</h2>
@@ -235,7 +253,7 @@ ${pageHero([['Home', '../'], ['Blog']], html`
   </div>
 </section>
 ${ctaBand('Turn these ideas into a plan', 'Our architects can review your roadmap and suggest where AI, cloud or CRM will pay back fastest.')}`;
-  return { title: 'Blog | RixlSoft', description: 'RixlSoft blog: practical guides on agentic AI, legacy modernization, AI-powered CRM, spatial computing and cloud cost optimization.', image: photo(f.slug, 1200), body };
+  return { breadcrumbs: [['Home', ''], ['Blog', 'blog/']], title: 'Blog | RixlSoft', description: 'RixlSoft blog: practical guides on agentic AI, legacy modernization, AI-powered CRM, spatial computing and cloud cost optimization.', image: photo(f.slug, 1200), body };
 }
 
 /* ---------------- Blog post ---------------- */
@@ -250,7 +268,7 @@ ${pageHero([['Home', '../'], ['Blog', 'index.html'], [esc(b.category)]], html`
 
 <section class="sec post-sec">
   <div class="container">
-    <div class="post-cover" data-reveal="clip"><img src="${photo(b.slug, 1400)}" alt="" fetchpriority="high"></div>
+    <div class="post-cover" data-reveal="clip"><img src="${photo(b.slug, 1400)}" srcset="${srcset(ARTICLE_PHOTOS[b.slug], [640, 1000, 1400, 1800])}" sizes="(max-width:1240px) 94vw, 1176px" alt="${esc(b.title)}" fetchpriority="high"></div>
     <div class="article-layout">
       <article class="article-main post">
         ${b.intro.map(p => html`<p class="post-lead">${esc(p)}</p>`)}
@@ -296,7 +314,8 @@ ${pageHero([['Home', '../'], ['Blog', 'index.html'], [esc(b.category)]], html`
 </section>
 ${ctaBand('Ready to move from reading to building?', 'Book a free consultation and get a practical plan for your next initiative.')}`;
   return {
-    title: `${b.title} | RixlSoft Blog`, description: b.excerpt.slice(0, 158), image: photo(b.slug, 1200), body,
-    jsonld: [{ '@context': 'https://schema.org', '@type': 'BlogPosting', headline: b.title, description: b.excerpt, image: photo(b.slug, 1200), author: { '@type': 'Organization', name: 'RixlSoft Engineering' }, publisher: { '@type': 'Organization', name: 'RixlSoft' }, url: `${SITE_URL}blog/${b.slug}.html` }],
+    title: b.title, metaTitle: SEO_TITLES[b.slug], ogType: 'article', published: isoDate(b.date), description: b.excerpt.slice(0, 158), image: photo(b.slug, 1200), body,
+    breadcrumbs: [['Home', ''], ['Blog', 'blog/'], [b.title, `blog/${b.slug}.html`]],
+    jsonld: [{ '@context': 'https://schema.org', '@type': 'BlogPosting', headline: b.title, description: b.excerpt, image: photo(b.slug, 1200), datePublished: isoDate(b.date), dateModified: isoDate(b.date), articleSection: b.category, wordCount: [...b.intro, ...b.sections.flatMap(x => [...x.paras, ...(x.bullets || [])])].join(' ').split(/\s+/).length, author: { '@type': 'Organization', name: 'RixlSoft Engineering', url: SITE_URL }, publisher: PUBLISHER, mainEntityOfPage: `${SITE_URL}blog/${b.slug}.html` }],
   };
 }
