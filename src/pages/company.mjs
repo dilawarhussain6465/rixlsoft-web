@@ -1,6 +1,7 @@
 import { esc, icon, logo, html } from '../lib.mjs';
 import { PHOTOS, PLATFORMS, RECOGNITION, FORM_INBOX, img } from '../data/site.mjs';
 import { SITE_URL } from '../layout.mjs';
+import { TESTIMONIALS, CLIENTS } from '../data/testimonials.mjs';
 import { PROCESS } from './home.mjs';
 
 /** Devsinc-style "Why RixlSoft" card: platforms we build on + recognition. */
@@ -85,6 +86,7 @@ ${hero('About Us', 'About RixlSoft', 'We Engineer Intelligent Systems That <em>M
       <div class="stat-box"><span class="s-ico">${icon('handshake')}</span><div class="stat-num" data-count="40">40<em>+</em></div><div class="l">Active Clients</div></div>
       <div class="stat-box"><span class="s-ico">${icon('smile')}</span><div class="stat-num" data-count="98">98<em>%</em></div><div class="l">Client Satisfaction</div></div>
     </div>
+    ${trustedStrip()}
   </div>
 </section>
 
@@ -278,4 +280,45 @@ export function thanksPage() {
   </div>
 </section>`;
   return { title: 'Thank You | RixlSoft', description: 'Thank you for contacting RixlSoft.', body };
+}
+
+/* ---------------- Client voices + Trusted by ---------------- */
+const clientMark = key => { const c = CLIENTS[key]; return html`<span class="client-mark"><span class="cm-mono">${c.mono}</span><span class="cm-name">${esc(c.name)}${c.sub ? html`<small>${esc(c.sub)}</small>` : ''}</span></span>`; };
+
+export function trustedStrip(light = false) {
+  return html`
+    <div class="trusted${light ? ' light' : ''}">
+      <div class="why-eyebrow">Trusted by</div>
+      <div class="trusted-row" data-stagger=".06" data-reveal-type="up">${Object.keys(CLIENTS).map(clientMark)}</div>
+    </div>`;
+}
+
+export function testimonialsSection() {
+  return html`
+<section class="sec tm-sec" id="testimonials">
+  <div class="container" style="position:relative;z-index:1">
+    <div class="sec-head-row">
+      <div data-reveal="up">
+        <div class="why-eyebrow">Client Voices</div>
+        <h2 class="tm-title">Trusted with the work <em>that matters most</em></h2>
+      </div>
+      <div class="tm-nav" data-reveal="left">
+        <button class="hs-arrow" data-tm="-1" aria-label="Previous testimonial">${icon('arrow-left')}</button>
+        <button class="hs-arrow" data-tm="1" aria-label="Next testimonial">${icon('arrow-right')}</button>
+      </div>
+    </div>
+    <div class="tm-track" data-tm-track data-stagger=".1" data-reveal-type="up">
+      ${TESTIMONIALS.map(t => html`
+      <figure class="tm-card spot">
+        <span class="tm-q" aria-hidden="true">&ldquo;</span>
+        <blockquote>${esc(t.quote)}</blockquote>
+        <figcaption>
+          <div><strong>${esc(t.name)}</strong><span>${esc(t.role)}, ${esc(CLIENTS[t.client].name)}${CLIENTS[t.client].sub ? ' ' + esc(CLIENTS[t.client].sub) : ''}</span></div>
+          ${clientMark(t.client)}
+        </figcaption>
+      </figure>`)}
+    </div>
+    ${trustedStrip()}
+  </div>
+</section>`;
 }
