@@ -2,6 +2,13 @@
    RIXLSOFT — INTERACTIONS & ANIMATIONS (vanilla, no deps)
 ============================================================ */
 (() => {
+  /* ---------- Anti-clickjacking: refuse to run inside another site's frame ---------- */
+  if (window.top !== window.self) {
+    try { window.top.location.replace(window.location.href); }
+    catch (e) { document.documentElement.style.display = 'none'; }
+    return;
+  }
+  const loadedAt = Date.now();
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -322,6 +329,10 @@
       label.querySelector('.fd-text').textContent = f ? `${f.name} (${(f.size / 1048576).toFixed(1)} MB)` : 'Choose a file or drag it here';
     }));
     form.addEventListener('submit', e => {
+      // Spam protection: honeypot must stay empty and humans need more than a few seconds to fill a form
+      const hp = form.querySelector('[name=_honey]');
+      if (hp && hp.value) { e.preventDefault(); return; }
+      if (Date.now() - loadedAt < 4000) { e.preventDefault(); toast('Please take a moment to review your details, then send again.', false); return; }
       let ok = true, msg = 'Please fill in the highlighted fields.';
       $$('[required]', form).forEach(f => {
         const bad = f.type === 'file' ? !f.files.length : (!f.value.trim() || (f.type === 'email' && !/^\S+@\S+\.\S+$/.test(f.value)));

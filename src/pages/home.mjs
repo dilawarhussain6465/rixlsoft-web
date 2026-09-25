@@ -280,15 +280,15 @@ export function contactSection() {
         <input type="hidden" name="_next" value="${SITE_URL}thanks.html?type=contact">
         <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="form-row">
-          <div class="form-group"><label for="f-name">Full Name *</label><input id="f-name" name="Name" type="text" class="form-control" placeholder="Your full name" required autocomplete="name"></div>
-          <div class="form-group"><label for="f-email">Email *</label><input id="f-email" name="email" type="email" class="form-control" placeholder="work@company.com" required autocomplete="email"></div>
+          <div class="form-group"><label for="f-name">Full Name *</label><input maxlength="80" id="f-name" name="Name" type="text" class="form-control" placeholder="Your full name" required autocomplete="name"></div>
+          <div class="form-group"><label for="f-email">Email *</label><input maxlength="120" id="f-email" name="email" type="email" class="form-control" placeholder="work@company.com" required autocomplete="email"></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label for="f-phone">Phone Number</label><input id="f-phone" name="Phone" type="tel" class="form-control" placeholder="+1 234 567 8900" autocomplete="tel"></div>
-          <div class="form-group"><label for="f-company">Company Name *</label><input id="f-company" name="Company" type="text" class="form-control" placeholder="Your company" required autocomplete="organization"></div>
+          <div class="form-group"><label for="f-phone">Phone Number</label><input maxlength="30" id="f-phone" name="Phone" type="tel" class="form-control" placeholder="+1 234 567 8900" autocomplete="tel"></div>
+          <div class="form-group"><label for="f-company">Company Name *</label><input maxlength="120" id="f-company" name="Company" type="text" class="form-control" placeholder="Your company" required autocomplete="organization"></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label for="f-url">Company URL</label><input id="f-url" name="Website" type="url" class="form-control" placeholder="https://yourcompany.com"></div>
+          <div class="form-group"><label for="f-url">Company URL</label><input maxlength="200" id="f-url" name="Website" type="url" class="form-control" placeholder="https://yourcompany.com"></div>
           <div class="form-group"><label for="f-region">Region *</label>
             <select id="f-region" name="Region" class="form-control" required>
               <option value="">Select Region</option>
@@ -307,7 +307,7 @@ export function contactSection() {
           </div>
         </div>
         <div class="form-row">
-          <div class="form-group full"><label for="f-details">Project Details *</label><textarea id="f-details" name="Details" class="form-control" placeholder="Tell us about your project goals, timeline, and any specific requirements..." required></textarea></div>
+          <div class="form-group full"><label for="f-details">Project Details *</label><textarea maxlength="3000" id="f-details" name="Details" class="form-control" placeholder="Tell us about your project goals, timeline, and any specific requirements..." required></textarea></div>
         </div>
         <div class="form-row">
           <div class="form-group full"><label for="f-file">Attach a brief or RFP <span class="opt">(optional · PDF, DOC, PPT · max 5 MB)</span></label>

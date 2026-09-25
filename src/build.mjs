@@ -56,7 +56,7 @@ for (const meta of SERVICES) {
 // Company pages
 write('about.html', layout({ root: '', path: 'about.html', ...aboutPage(), body: aboutPage().body + contactSection() }));
 write('careers.html', layout({ root: '', path: 'careers.html', ...careersPage() }));
-write('thanks.html', layout({ root: '', path: 'thanks.html', ...thanksPage() }));
+write('thanks.html', layout({ root: '', path: 'thanks.html', noindex: true, ...thanksPage() }));
 
 // Case studies & blog
 const csIdx = caseStudiesIndex();
@@ -69,4 +69,7 @@ for (const b of BLOG) { const p = blogPage(b); write(`blog/${b.slug}.html`, layo
 // Sitemap
 const urls = ['', 'about.html', 'careers.html', 'services/', ...SERVICES.map(s => `services/${s.slug}.html`), 'case-studies/', ...CASE_STUDIES.map(c => `case-studies/${c.slug}.html`), 'blog/', ...BLOG.map(b => `blog/${b.slug}.html`)];
 write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.map(u => `  <url><loc>${SITE_URL}${u}</loc></url>`).join('\n')}\n</urlset>\n`);
+const expires = new Date(Date.now() + 365 * 864e5).toISOString().slice(0, 10) + 'T00:00:00.000Z';
+write('.well-known/security.txt', `Contact: ${SITE_URL}#contact\nExpires: ${expires}\nPreferred-Languages: en\nCanonical: ${SITE_URL}.well-known/security.txt\n`);
+write('.nojekyll', '');
 console.log(`Done — ${urls.length} pages.`);

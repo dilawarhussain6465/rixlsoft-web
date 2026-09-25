@@ -11,6 +11,24 @@ const version = file => crypto.createHash('md5').update(fs.readFileSync(new URL(
 const CSS_V = version('assets/css/main.css');
 const JS_V = version('assets/js/main.js');
 
+// Content-Security-Policy (GitHub Pages can't send headers, so it is set via <meta>).
+// Only our own scripts may run; styles/fonts only from Google Fonts; images only from Unsplash;
+// forms may only post to FormSubmit (and back to this site).
+const CSP = [
+  "default-src 'self'",
+  "script-src 'self'",
+  "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+  "font-src 'self' https://fonts.gstatic.com",
+  "img-src 'self' data: https://images.unsplash.com",
+  "connect-src 'self'",
+  "form-action 'self' https://formsubmit.co",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-src 'none'",
+  "manifest-src 'self'",
+  'upgrade-insecure-requests',
+].join('; ');
+
 export const SITE_URL = 'https://dilawarhussain6465.github.io/rixlsoft-web/';
 const caret = '<svg class="nav-caret" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
@@ -202,6 +220,9 @@ export function layout(p) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="${CSP}">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="format-detection" content="telephone=no">${p.noindex ? '\n<meta name="robots" content="noindex, nofollow">' : ''}
 <title>${esc(p.title)}</title>
 <meta name="description" content="${esc(p.description)}">
 <link rel="canonical" href="${url}">
