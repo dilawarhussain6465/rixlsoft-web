@@ -227,18 +227,18 @@ ${hero('Careers', 'Careers at RixlSoft', 'Build What Comes Next <em>With Us</em>
         <input type="hidden" name="_next" value="${SITE_URL}thanks.html?type=careers">
         <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="form-row">
-          <div class="form-group"><label for="a-name">Full Name *</label><input id="a-name" name="Name" class="form-control" required autocomplete="name" placeholder="Your full name"></div>
-          <div class="form-group"><label for="a-email">Email *</label><input id="a-email" name="email" type="email" class="form-control" required autocomplete="email" placeholder="you@email.com"></div>
+          <div class="form-group"><label for="a-name">Full Name *</label><input maxlength="80" id="a-name" name="Name" class="form-control" required autocomplete="name" placeholder="Your full name"></div>
+          <div class="form-group"><label for="a-email">Email *</label><input maxlength="120" id="a-email" name="email" type="email" class="form-control" required autocomplete="email" placeholder="you@email.com"></div>
         </div>
         <div class="form-row">
           <div class="form-group"><label for="a-role">Area of Interest *</label><select id="a-role" name="Role" class="form-control" required><option value="">Select an area</option>${roles.map(r => html`<option>${r}</option>`)}</select></div>
           <div class="form-group"><label for="a-exp">Years of Experience</label><select id="a-exp" name="Experience" class="form-control"><option value="">Select</option><option>0–1</option><option>2–4</option><option>5–7</option><option>8+</option></select></div>
         </div>
         <div class="form-row">
-          <div class="form-group full"><label for="a-link">LinkedIn / Portfolio URL</label><input id="a-link" name="Profile" type="url" class="form-control" placeholder="https://"></div>
+          <div class="form-group full"><label for="a-link">LinkedIn / Portfolio URL</label><input maxlength="200" id="a-link" name="Profile" type="url" class="form-control" placeholder="https://"></div>
         </div>
         <div class="form-row">
-          <div class="form-group full"><label for="a-msg">About You *</label><textarea id="a-msg" name="Message" class="form-control" required placeholder="Your background, strongest skills and what you want to work on next..."></textarea></div>
+          <div class="form-group full"><label for="a-msg">About You *</label><textarea maxlength="3000" id="a-msg" name="Message" class="form-control" required placeholder="Your background, strongest skills and what you want to work on next..."></textarea></div>
         </div>
         <div class="form-row">
           <div class="form-group full"><label for="a-cv">CV / Resume * <span class="opt">(PDF, DOC or DOCX · max 5 MB)</span></label>

@@ -1,0 +1,4 @@
+Contact: https://dilawarhussain6465.github.io/rixlsoft-web/#contact
+Expires: 2027-09-25T00:00:00.000Z
+Preferred-Languages: en
+Canonical: https://dilawarhussain6465.github.io/rixlsoft-web/.well-known/security.txt

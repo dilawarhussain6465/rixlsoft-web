@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://images.unsplash.com; connect-src 'self'; form-action 'self' https://formsubmit.co; base-uri 'self'; object-src 'none'; frame-src 'none'; manifest-src 'self'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="format-detection" content="telephone=no">
 <title>Staff Augmentation Services | RixlSoft</title>
 <meta name="description" content="Extend your in-house team with vetted RixlSoft engineers who join your standups, work in your repositories and ship inside your sprint cadence, without the de">
 <link rel="canonical" href="https://dilawarhussain6465.github.io/rixlsoft-web/services/staff-augmentation.html">
@@ -542,15 +545,15 @@
         <input type="hidden" name="_next" value="https://dilawarhussain6465.github.io/rixlsoft-web/thanks.html?type=contact">
         <input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
         <div class="form-row">
-          <div class="form-group"><label for="f-name">Full Name *</label><input id="f-name" name="Name" type="text" class="form-control" placeholder="Your full name" required autocomplete="name"></div>
-          <div class="form-group"><label for="f-email">Email *</label><input id="f-email" name="email" type="email" class="form-control" placeholder="work@company.com" required autocomplete="email"></div>
+          <div class="form-group"><label for="f-name">Full Name *</label><input maxlength="80" id="f-name" name="Name" type="text" class="form-control" placeholder="Your full name" required autocomplete="name"></div>
+          <div class="form-group"><label for="f-email">Email *</label><input maxlength="120" id="f-email" name="email" type="email" class="form-control" placeholder="work@company.com" required autocomplete="email"></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label for="f-phone">Phone Number</label><input id="f-phone" name="Phone" type="tel" class="form-control" placeholder="+1 234 567 8900" autocomplete="tel"></div>
-          <div class="form-group"><label for="f-company">Company Name *</label><input id="f-company" name="Company" type="text" class="form-control" placeholder="Your company" required autocomplete="organization"></div>
+          <div class="form-group"><label for="f-phone">Phone Number</label><input maxlength="30" id="f-phone" name="Phone" type="tel" class="form-control" placeholder="+1 234 567 8900" autocomplete="tel"></div>
+          <div class="form-group"><label for="f-company">Company Name *</label><input maxlength="120" id="f-company" name="Company" type="text" class="form-control" placeholder="Your company" required autocomplete="organization"></div>
         </div>
         <div class="form-row">
-          <div class="form-group"><label for="f-url">Company URL</label><input id="f-url" name="Website" type="url" class="form-control" placeholder="https://yourcompany.com"></div>
+          <div class="form-group"><label for="f-url">Company URL</label><input maxlength="200" id="f-url" name="Website" type="url" class="form-control" placeholder="https://yourcompany.com"></div>
           <div class="form-group"><label for="f-region">Region *</label>
             <select id="f-region" name="Region" class="form-control" required>
               <option value="">Select Region</option>
@@ -569,7 +572,7 @@
           </div>
         </div>
         <div class="form-row">
-          <div class="form-group full"><label for="f-details">Project Details *</label><textarea id="f-details" name="Details" class="form-control" placeholder="Tell us about your project goals, timeline, and any specific requirements..." required></textarea></div>
+          <div class="form-group full"><label for="f-details">Project Details *</label><textarea maxlength="3000" id="f-details" name="Details" class="form-control" placeholder="Tell us about your project goals, timeline, and any specific requirements..." required></textarea></div>
         </div>
         <div class="form-row">
           <div class="form-group full"><label for="f-file">Attach a brief or RFP <span class="opt">(optional · PDF, DOC, PPT · max 5 MB)</span></label>
@@ -616,6 +619,6 @@
   <div class="footer-watermark" aria-hidden="true">RixlSoft</div>
 </footer>
 <button class="to-top" aria-label="Back to top"><svg class="icon" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" ><path d="m5 12 7-7 7 7" /><path d="M12 19V5" /></svg></button>
-<script src="../assets/js/main.js?v=253a693132" defer></script>
+<script src="../assets/js/main.js?v=051c9f2683" defer></script>
 </body>
 </html>
