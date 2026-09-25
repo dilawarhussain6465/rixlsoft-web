@@ -283,42 +283,39 @@ export function thanksPage() {
 }
 
 /* ---------------- Client voices + Trusted by ---------------- */
-const clientMark = key => { const c = CLIENTS[key]; return html`<span class="client-mark"><span class="cm-mono">${c.mono}</span><span class="cm-name">${esc(c.name)}${c.sub ? html`<small>${esc(c.sub)}</small>` : ''}</span></span>`; };
+const clientLogo = (key, root = '') => {
+  const c = CLIENTS[key];
+  if (!c.logo) return html`<span class="client-tile mono-tile" title="${esc(c.name)}"><span class="cm-mono">${c.mono}</span><span class="cm-name">${esc(c.short || c.name)}</span></span>`;
+  return html`<span class="client-tile${c.dark ? ' dark' : ''}${c.square ? ' square' : ''}" title="${esc(c.name)}"><img src="${root}assets/clients/${c.logo}" alt="${esc(c.name)}" loading="lazy"></span>`;
+};
 
-export function trustedStrip(light = false) {
+export function trustedStrip(root = '') {
   return html`
-    <div class="trusted${light ? ' light' : ''}">
+    <div class="trusted">
       <div class="why-eyebrow">Trusted by</div>
-      <div class="trusted-row" data-stagger=".06" data-reveal-type="up">${Object.keys(CLIENTS).map(clientMark)}</div>
+      <div class="trusted-row" data-stagger=".06" data-reveal-type="up">${Object.keys(CLIENTS).map(k => clientLogo(k, root))}</div>
     </div>`;
 }
 
-export function testimonialsSection() {
+export function testimonialsSection(root = '') {
   return html`
 <section class="sec tm-sec" id="testimonials">
   <div class="container" style="position:relative;z-index:1">
-    <div class="sec-head-row">
-      <div data-reveal="up">
-        <div class="why-eyebrow">Client Voices</div>
-        <h2 class="tm-title">Trusted with the work <em>that matters most</em></h2>
-      </div>
-      <div class="tm-nav" data-reveal="left">
-        <button class="hs-arrow" data-tm="-1" aria-label="Previous testimonial">${icon('arrow-left')}</button>
-        <button class="hs-arrow" data-tm="1" aria-label="Next testimonial">${icon('arrow-right')}</button>
-      </div>
+    <div data-reveal="up" style="margin-bottom:36px">
+      <div class="why-eyebrow">Client Voices</div>
+      <h2 class="tm-title">Trusted with the work <em>that matters most</em></h2>
     </div>
-    <div class="tm-track" data-tm-track data-stagger=".1" data-reveal-type="up">
-      ${TESTIMONIALS.map(t => html`
+    <div class="tm-grid" data-stagger=".1" data-reveal-type="up">
+      ${TESTIMONIALS.map(t => { const c = CLIENTS[t.client]; return html`
       <figure class="tm-card spot">
         <span class="tm-q" aria-hidden="true">&ldquo;</span>
         <blockquote>${esc(t.quote)}</blockquote>
         <figcaption>
-          <div><strong>${esc(t.name)}</strong><span>${esc(t.role)}, ${esc(CLIENTS[t.client].name)}${CLIENTS[t.client].sub ? ' ' + esc(CLIENTS[t.client].sub) : ''}</span></div>
-          ${clientMark(t.client)}
+          <div><strong>${esc(t.name)}</strong><span>${esc(t.role)}</span><span class="tm-co">${esc(c.name)}</span></div>
         </figcaption>
-      </figure>`)}
+      </figure>`; })}
     </div>
-    ${trustedStrip()}
+    ${trustedStrip(root)}
   </div>
 </section>`;
 }
